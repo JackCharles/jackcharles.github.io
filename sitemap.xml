@@ -2,13 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.zjee.ml/2019/08/27/hive-on-spark/</loc>
-    
-    <lastmod>2019-08-26T16:11:18.275Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.zjee.ml/2018/11/29/learn-git/</loc>
     
     <lastmod>2019-08-26T14:00:38.469Z</lastmod>
@@ -17,13 +10,6 @@
   
   <url>
     <loc>http://blog.zjee.ml/2018/11/29/thrift-grama/</loc>
-    
-    <lastmod>2019-08-26T14:00:38.469Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.zjee.ml/categories/index.html</loc>
     
     <lastmod>2019-08-26T14:00:38.469Z</lastmod>
     
@@ -44,9 +30,23 @@
   </url>
   
   <url>
+    <loc>http://blog.zjee.ml/categories/index.html</loc>
+    
+    <lastmod>2019-08-26T14:00:38.469Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.zjee.ml/2019/08/24/java-lock-util/</loc>
     
     <lastmod>2019-08-23T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.zjee.ml/2018/12/02/hive-on-spark/</loc>
+    
+    <lastmod>2018-12-02T13:02:57.000Z</lastmod>
     
   </url>
   
