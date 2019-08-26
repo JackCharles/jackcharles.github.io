@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="并发编程中，锁是一个永远绕不过的话题，深入认识Java中的同步、互斥机制是Java并发编程的必经之路。本篇文章就Java原生锁机制做一个简单的描述，让自己能全面宏观认识整个框架，在工作学习中能正确、高效使用Java同步、互斥相关工具。"><meta name="keywords" content="多线程, Java锁机制, 江影不沉浮"><link rel="alternate" href="/atom.xml" title="江影不沉浮"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="http://blog.zjee.ml/2019/08/24/java-lock-util/">
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css"><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI",
+      appKey: "W2WW9ah2D4zfyhW3aYtKw3xD"
+    });
+  </script><script>
+  window.config = {"leancloud":{"app_id":"hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI","app_key":"W2WW9ah2D4zfyhW3aYtKw3xD"},"toc":true,"fancybox":true,"pjax":true,"latex":true};
+</script>
+
+    <title>Java中的同步、互斥机制 - 江影不沉浮</title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">江影不沉浮</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">Home
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">Archives
+          </li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags
+          </li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">江影不沉浮</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            Home
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            Archives
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/tags/">
+            Tags
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/categories/">
+            Categories
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            About
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Java中的同步、互斥机制
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-08-24
+        </span><span class="post-category">
+            <a href="/categories/Java/">Java</a>
+            </span>
+        <span class="post-visits" data-url="/2019/08/24/java-lock-util/" data-title="Java中的同步、互斥机制">
+          Visits 0
+        </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、Synchronized"><span class="toc-text">一、Synchronized</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、ReadWriteLock"><span class="toc-text">三、ReadWriteLock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、相关概念"><span class="toc-text">四、相关概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、参考资料"><span class="toc-text">五、参考资料</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><p>在Java多线程编程中，同步和互斥是一个不可避免的话题。Java为开发人员提供了以下几种锁机制：</p>
+<ol>
+<li>synchronized关键字</li>
+<li>Lock接口</li>
+<li>ReadWriteLock接口</li>
+</ol>
+<p>这几种锁机制在日常编程中用的很多，但它们有什么联系和区别呢？</p>
+<h3 id="一、Synchronized"><a href="#一、Synchronized" class="headerlink" title="一、Synchronized"></a>一、Synchronized</h3><ol>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```java</span><br><span class="line">public void consumer1()&#123;</span><br><span class="line">	//synchronize 用在代码块上，表示该代码块互斥</span><br><span class="line">	synchronized (this) &#123; </span><br><span class="line">			resource -- ;</span><br><span class="line">			System.out.println(&quot; resource: &quot; + resource);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//synchronize用在方法上，表示整个方法调用互斥</span><br><span class="line">public synchronized boolean consumer2()&#123; </span><br><span class="line">	resource -- ;</span><br><span class="line">	System.out.println(&quot;resource: &quot; + resource);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//synchronize用在静态方法上，使用Class对象作为对象锁</span><br><span class="line">public static synchronized boolean consumer3()&#123; </span><br><span class="line">	resource -- ;</span><br><span class="line">	System.out.println(&quot;resource: &quot; + resource);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>```new Object()```。这里需要注意一点，不要使用```String```或常用的数字对象去作为锁对象，因为他们在JVM缓存在一个常量池中，是一个共享对象，如果多处使用这些对象作为锁对象，可能会导致不可预期的死锁。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. **可重入**是锁的一个重要特性，它是指一个线程重复获取获取它***已经拥有的锁***，如果可以获取到则表示该锁是**可重入**的，否则就是**不可重入**的。```synchronized```是**可重入**的，示例如下：</span><br><span class="line"></span><br><span class="line">   ```java</span><br><span class="line">   public class Test &#123;</span><br><span class="line">       private int resource = 100;</span><br><span class="line">       public static void main(String[] args) throws InterruptedException &#123;</span><br><span class="line">           Test test = new Test();</span><br><span class="line">           test.consumer1();</span><br><span class="line">       &#125;</span><br><span class="line">   </span><br><span class="line">       public synchronized void consumer1() &#123; //第一次获取锁</span><br><span class="line">           resource--;</span><br><span class="line">           System.out.println(&quot;consumer1: &quot; + resource);</span><br><span class="line">           this.consumer2(); //调用另外一个synchronized修饰的方法</span><br><span class="line">       &#125;</span><br><span class="line">   </span><br><span class="line">       public synchronized void consumer2() &#123; //第二次获取锁</span><br><span class="line">           resource--;</span><br><span class="line">           System.out.println(&quot;consumer2: &quot; + resource);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   /**</span><br><span class="line">    * 输出：</span><br><span class="line">    * consumer1: 99</span><br><span class="line">    * consumer2: 98</span><br><span class="line">    */</span><br></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">4. 总结：</span><br><span class="line">   - synchronized优点：使用简单，速度快(JVM底层支持，编译后会形成`monitorenter`、`monitorenter`两条指令)，自动释放锁，保证了互斥性和变量修改的可见性（一个线程对变量的修改对其他线程立即可见）。</span><br><span class="line">   - synchronized缺点：synchronized获取锁的过程无法被中断，也不能尝试非阻塞、超时返回等策略获取锁，这在高并发环境下将会带来很大的性能损失。</span><br><span class="line"></span><br><span class="line">### 二、Lock</span><br><span class="line"></span><br><span class="line">1. Lock是Java5开始提供的一个JDK层面的用于控制同步互斥的接口，它位于```java.util.concurrent.locks```包下。此外，该包下还有Condition和ReadWriteLock两兄弟，它们都是为多线程同步、互斥服务的，其类图如下：</span><br><span class="line"></span><br><span class="line">   ![Lock家族类图](C:\Users\zhongjie\Desktop\Lock.png &apos;Lock家族类图&apos;)</span><br><span class="line"></span><br><span class="line">   我们可以看到Lock接口下一般供开发人员直接使用的实现是`ReentrantLock`，这个类基本解决了`synchronized`存在的不足，我们看一下Lock接口提供的方法：</span><br><span class="line">   </span><br><span class="line">   ```java</span><br><span class="line">   public interface Lock &#123;</span><br><span class="line">       //开始获取锁(进入临界区,阻塞方法)</span><br><span class="line">       void lock(); </span><br><span class="line">       //开始获取锁，同时可以响应中断事件，可在捕获InterruptedException异常后做后续处理(阻塞方法)</span><br><span class="line">       void lockInterruptibly() throws InterruptedException; </span><br><span class="line">       //尝试获取锁，无论成功或失败都立即返回(非阻塞)</span><br><span class="line">       boolean tryLock();</span><br><span class="line">       //尝试获取锁，如果成功立即返回，否则等待给定时间后返回，并且等待中还可以响应中断事件</span><br><span class="line">       boolean tryLock(long var1, TimeUnit var3) throws InterruptedException;</span><br><span class="line">       //释放锁</span><br><span class="line">       void unlock();</span><br><span class="line">       //条件变量，用于线程间通信及同步协作(生产者、消费者模型会用到)</span><br><span class="line">       Condition newCondition();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>   通过Lock接口提供的方法我们看到Lock锁更加细粒度化，它可以让开发人员根据实际需求灵活处理获取锁期间的等待行为。使用Lock一定要<strong>手动释放锁</strong>，这是很重要的一点，如果处理不慎将会导致不可预期的死锁，一般为了可靠释放锁，会将unlock调用放在<code>finally</code>块中。</p>
+<ol start="2">
+<li><p>说完Lock接口我们来看一下它的实现<code>ReentrantLock</code>，从字面上就知道这个锁是一个<strong>可重入的</strong>，下面是该类提供的方法（仅列举部分方法）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReentrantLock</span> <span class="keyword">implements</span> <span class="title">Lock</span>, <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="comment">//构造方法，默认非公平锁</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ReentrantLock</span><span class="params">()</span> </span>&#123;...&#125;</span><br><span class="line">    <span class="comment">//构造方法，传入一个boolean值指定是否需要公平锁</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ReentrantLock</span><span class="params">(<span class="keyword">boolean</span> var1)</span> </span>&#123;...&#125;</span><br><span class="line">	<span class="comment">//获取当前线程对该锁的持有数量(可重入特性)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getHoldCount</span><span class="params">()</span> </span>&#123;...&#125;</span><br><span class="line">	<span class="comment">//是否被当前线程持有</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isHeldByCurrentThread</span><span class="params">()</span> </span>&#123;...&#125;</span><br><span class="line">	<span class="comment">//是否成功获取锁</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isLocked</span><span class="params">()</span> </span>&#123;...&#125;</span><br><span class="line">	<span class="comment">//是否公平锁</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">isFair</span><span class="params">()</span> </span>&#123;...&#125;</span><br><span class="line">	<span class="comment">//返回当前持有此锁的线程</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Thread <span class="title">getOwner</span><span class="params">()</span> </span>&#123;...&#125;</span><br><span class="line">	<span class="comment">//是否有可能正在等待获取此锁的线程</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">hasQueuedThreads</span><span class="params">()</span> </span>&#123;...&#125;</span><br><span class="line">	<span class="comment">//查询指定线程是否正在等待获取此锁</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">hasQueuedThread</span><span class="params">(Thread var1)</span> </span>&#123;...&#125;</span><br><span class="line">	<span class="comment">//返回可能获取此锁的等待线程数量</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getQueueLength</span><span class="params">()</span> </span>&#123;...&#125;</span><br><span class="line">	<span class="comment">//返回可能正在等待此锁的线程集合</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Collection&lt;Thread&gt; <span class="title">getQueuedThreads</span><span class="params">()</span> </span>&#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面的构造方法可知，<code>ReentrantLock</code>默认是<strong>非公平锁</strong>，但可根据需要配置成<strong>公平锁</strong>。除此之外，它还提供了一系列查询方法，用于查询当前锁的获取状态，这里不一一描述了。</p>
+</li>
+<li><p>基础用法：</p>
+<ul>
+<li><p>lock：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Lock lock = <span class="keyword">new</span> ReentrantLock(<span class="keyword">true</span>);</span><br><span class="line">lock.lock(); <span class="comment">//lock</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">//do something</span></span><br><span class="line">&#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">	<span class="comment">//handle exception</span></span><br><span class="line">&#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">    lock.unlock(); <span class="comment">//unlock</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>lockInterruptibly：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123; </span><br><span class="line">    Lock lock = <span class="keyword">new</span> ReentrantLock(<span class="keyword">true</span>);</span><br><span class="line">    lock.lockInterruptibly(); <span class="comment">//向上抛出中断异常，也可以自己try cache处理</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//Do something</span></span><br><span class="line">    &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">		<span class="comment">//handle exception	</span></span><br><span class="line">    &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">        lock.unlock(); <span class="comment">//unlock</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tryLock：（两种使用方式）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//非阻塞</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Lock lock = <span class="keyword">new</span> ReentrantLock(<span class="keyword">true</span>);</span><br><span class="line">    <span class="keyword">if</span>(lock.tryLock()) &#123; <span class="comment">//尝试获取锁，这个调用不会阻塞</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//do something</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="comment">//handle exception</span></span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock(); <span class="comment">//unlock</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//获取锁失败</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//阻塞，可设置超时时间，可中断</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAnything</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     Lock lock = <span class="keyword">new</span> ReentrantLock(<span class="keyword">true</span>);</span><br><span class="line">     <span class="keyword">try</span> &#123;</span><br><span class="line">         <span class="keyword">if</span>(lock.tryLock(<span class="number">5</span>, TimeUnit.SECONDS)) &#123; <span class="comment">//超时设为5s</span></span><br><span class="line">             <span class="keyword">try</span> &#123;</span><br><span class="line">                 <span class="comment">//do something</span></span><br><span class="line">             &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                 <span class="comment">//handle exception</span></span><br><span class="line">             &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                 lock.unlock(); <span class="comment">//unlock</span></span><br><span class="line">             &#125;</span><br><span class="line">         &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">             <span class="comment">//获取锁失败</span></span><br><span class="line">         &#125;</span><br><span class="line">     &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">         <span class="comment">//处理中断事件</span></span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码演示中，不难发现unlock操作都是放在finally语句中，而获取锁却不再对应try-catch中，这是因为对于非阻塞或可中断的获取锁方发来说，如果获取锁失败，后面再去调用unlock就会抛出<code>IllegalMonitorStateException</code>异常，这会带来不必要的麻烦，所以一般获取锁不成功就不会执行unlock。对于可中断的锁一般采用向上抛出，这是因为多线程环境下获取锁失败的后该是各线程自行采取相应处理策略，而不是由被调用者处理。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="三、ReadWriteLock"><a href="#三、ReadWriteLock" class="headerlink" title="三、ReadWriteLock"></a>三、ReadWriteLock</h3><ol>
+<li><p>JDK中除提供了基本的满足同步、互斥的Lock机制外，还提供了一种特殊的读写锁模型，该模型一定程度上降低了互斥要求，带来更好的性能体验。读写锁具体来说分为两方面：</p>
+<ul>
+<li>ReadLock：读锁不同线程可以重复获取（与可重入概念不一样），即一个资源是可以并发读的，资源加了读锁后只能再加读锁。</li>
+<li>WriteLock：写锁是完全互斥的，即一个资源加写锁后不能再施加其他锁，当然加了读锁的资源也不能加写锁。</li>
+</ul>
+</li>
+<li><p>读写锁在数据库中运用非常广泛，比如一行数据可以多个客户端读取，但不能同时写，也不能边读边写。下面演示读写锁的具体用法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LockTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> ReadWriteLock readWriteLock;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; resource; <span class="comment">//模拟公共资源</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//初始化</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LockTest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        readWriteLock = <span class="keyword">new</span> ReentrantReadWriteLock();</span><br><span class="line">        resource = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        resource.add(Thread.currentThread().getName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//主方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        LockTest lockTest = <span class="keyword">new</span> LockTest();</span><br><span class="line">        Thread r1 = <span class="keyword">new</span> Thread(() -&gt; &#123; <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;++i) &#123; lockTest.read();&#125; &#125;, <span class="string">"reader1"</span>);</span><br><span class="line">        Thread r2 = <span class="keyword">new</span> Thread(() -&gt; &#123; <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;++i) &#123; lockTest.read();&#125; &#125;, <span class="string">"reader2"</span>);</span><br><span class="line">        Thread w1 = <span class="keyword">new</span> Thread(()-&gt;&#123; <span class="keyword">try</span>&#123; lockTest.write(); &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            System.out.println(<span class="string">"writer1被中断"</span>); &#125;&#125;, <span class="string">"writer1"</span>);</span><br><span class="line">        Thread w2 = <span class="keyword">new</span> Thread(()-&gt;&#123; <span class="keyword">try</span>&#123; lockTest.write(); &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            System.out.println(<span class="string">"writer2被中断"</span>); &#125;&#125;, <span class="string">"writer2"</span>);</span><br><span class="line"></span><br><span class="line">        r1.start();</span><br><span class="line">        r2.start();</span><br><span class="line">        w2.start();</span><br><span class="line">        w1.start();</span><br><span class="line">        Thread.sleep(<span class="number">3</span>);<span class="comment">//等待3ms</span></span><br><span class="line">        w1.interrupt(); <span class="comment">//尝试中断writer1的阻塞</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//读取资源</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        readWriteLock.readLock().lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">": "</span> +resource);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            readWriteLock.readLock().unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//写入资源</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        readWriteLock.writeLock().lockInterruptibly();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            resource.add(Thread.currentThread().getName());</span><br><span class="line">            System.out.println(Thread.currentThread().getName()+<span class="string">": add resource"</span>);</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            readWriteLock.writeLock().unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**输出：</span></span><br><span class="line"><span class="comment"> * reader2: [main]</span></span><br><span class="line"><span class="comment"> * reader1: [main]</span></span><br><span class="line"><span class="comment"> * writer2: add resource</span></span><br><span class="line"><span class="comment"> * writer1被中断</span></span><br><span class="line"><span class="comment"> * reader2: [main, writer2]</span></span><br><span class="line"><span class="comment"> * reader1: [main, writer2]</span></span><br><span class="line"><span class="comment"> * reader1: [main, writer2]</span></span><br><span class="line"><span class="comment"> * reader2: [main, writer2]</span></span><br><span class="line"><span class="comment"> * reader1: [main, writer2]</span></span><br><span class="line"><span class="comment"> * reader2: [main, writer2]</span></span><br><span class="line"><span class="comment"> * reader1: [main, writer2]</span></span><br><span class="line"><span class="comment"> * reader2: [main, writer2]</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<p>上面演示了并发环境下ReadWriteLock的使用，这里需要注意的是最终的输出不是一个固定结果，如果writer1在3ms内获取到锁就不会输出<code>writer1被中断</code>（<code>w1.interrupt();</code>将会中断writer1里面的sleep），这个结果完全是随机的。虽然ReentrantReadWriteLock没实现Lock接口，但其内部类<code>ReentrantReadWriteLock.WriteLock</code>和<code>ReentrantReadWriteLock.ReadLock</code>实现了Lock接口，因此读写锁也具有Lock的全部特性。</p>
+</li>
+</ol>
+<h3 id="四、相关概念"><a href="#四、相关概念" class="headerlink" title="四、相关概念"></a>四、相关概念</h3><ul>
+<li><p>乐观锁/悲观锁</p>
+<p>乐观锁和悲观锁不是一种具体的锁，而是对待并发的一种态度。<strong>悲观锁</strong>认为对于同一资源的并发访问一定会发生修改操作，不加锁的并发访问一定会出问题，因此一定要加锁。<strong>乐观锁</strong>则认为并发访问很少发生资源修改操作，即使发生也会采用不断尝试的方式更新资源，不加锁的并发访问是不会出问题的。悲观锁适合写操作多的场景，乐观锁适合读操作多的场景。Java中各种加锁编程就属于悲观锁范围，而使用concurrent包下的AtomicXXX实现原子操作就属于乐观锁范围，因为Atomic类型是使用<a href="https://segmentfault.com/a/1190000017943658" target="_blank" rel="noopener">CAS算法</a>实现原子操作的，并没有使用锁，属于无锁编程，一般来说乐观锁的性能好于悲观锁。</p>
+</li>
+<li><p>可重入锁</p>
+<p>可重入是只可重复递归调用的锁，在加锁的方法类可递归调用该方法，并不会发生死锁。<code>ReentrantLock</code>和<code>synchronized</code>都是可重入锁。</p>
+</li>
+<li><p>独占锁（排它锁）/共享锁</p>
+<p>独占锁即一个锁只能一个线程占有，如<code>ReentrantLock</code>、<code>ReentrantReadWriteLock.WriteLock</code>就是独占锁。共享锁可被多个线程共享，如<code>ReentrantReadWriteLock.ReadLock</code></p>
+</li>
+<li><p>公平锁/非公平锁</p>
+<p>公平锁是指获取锁的顺序跟申请锁的顺序一致，反之亦然。</p>
+</li>
+<li><p>分段锁</p>
+<p>分段锁是一种锁的设计，它的核心思想是减小加锁粒度。比如在<code>ConcurrentHashMap</code>中就采用分段锁的思想，ConcurrentHashMap中有16个锁，每个散列桶由第N%16个锁来保护，所以一次加锁理论上（与数据分布均匀程度有关）只锁定整个Map的1/16的数据，其他部分的数据访问不受限制，ConcurrentHashMap最多可支持16个线程的并发写入。同样在MySQL中也有类似的设计出现，比如行锁就是一种分段锁，更新数据时只需要锁定特定行，其他行可供正常访问。</p>
+</li>
+<li><p>偏向锁/轻量级锁/重量级锁</p>
+<p>这3种分类非Java语言提供的特性，因此不做深入研究，可参考：<a href="https://www.cnblogs.com/wzj4858/p/8215369.html" target="_blank" rel="noopener">偏向锁/轻量级锁/重量级锁</a></p>
+</li>
+<li><p>自旋锁</p>
+<p>自旋锁关注的是在获取锁的过程中线程处所处状态，当一个线程在获取锁的时候，如果锁已经被其它线程获取，那么该线程将<strong>循环等待</strong>（不进入阻塞状态），然后不断的判断锁是否能够被成功获取，直到获取到锁才会退出循环。注意，自旋锁的设计是为了减少线程状态切换带来的开销（用户态-&gt;内核态，active-&gt;blocked）,当加锁区域的代码执行的非常快时，该设计能大大提高性能。而加锁区域执行缓慢时则相反，自旋锁不会释放CPU资源，如果长时间处于自旋状态将严重拖累系统性能，所以是否采用自旋锁需要根据需求而定。</p>
+</li>
+</ul>
+<h3 id="五、参考资料"><a href="#五、参考资料" class="headerlink" title="五、参考资料"></a>五、参考资料</h3><p>[1]. <a href="https://blog.csdn.net/justloveyou_/article/details/54972105" target="_blank" rel="noopener">Java 并发：Lock 框架详解</a></p>
+<p>[2]. <a href="http://blog.itpub.net/31545684/viewspace-2375117/" target="_blank" rel="noopener">Java 种15种锁的介绍：公平锁，可重入锁，独享锁，互斥锁等等…</a></p>
+<p>[3]. <a href="https://www.cnblogs.com/wzj4858/p/8215369.html" target="_blank" rel="noopener">javas的四种状态 无锁状态 偏向锁状态 轻量级锁状态 重量级锁状态</a></p>
+<p>[4]. <a href="https://zhuanlan.zhihu.com/p/40729293" target="_blank" rel="noopener">面试必备之深入理解自旋锁</a></p>
+<p>[5]. <a href="http://tool.oschina.net/apidocs/apidoc?api=jdk-zh" target="_blank" rel="noopener">JDK文档</a></p>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>Author: </span>
+      <a href="http://blog.zjee.ml">jackcharles</a>
+    </p>
+    <p class="copyright-item">
+      <span>Link: </span>
+      <a href="http://blog.zjee.ml/2019/08/24/java-lock-util/">http://blog.zjee.ml/2019/08/24/java-lock-util/</a>
+    </p>
+    <p class="copyright-item">
+      <span>License: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/多线程/">多线程</a>
+            <a href="/tags/Java锁机制/">Java锁机制</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2018/12/02/hive-on-spark/">
+        <span class="next-text nav-default">MAC下 Hive on Spark 环境搭建</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC80MTIyNy8xNzc3NQ==">
+        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+      </div>  
+    </div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:zjee@live.cn" class="iconfont icon-email" title="email"></a>
+        <a href="/pass" class="iconfont icon-facebook" title="facebook"></a>
+        <a href="/pass" class="iconfont icon-weibo" title="weibo"></a>
+        <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    </div><div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2018 - 2019<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">jackcharles</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript">
+	(function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+  </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>
