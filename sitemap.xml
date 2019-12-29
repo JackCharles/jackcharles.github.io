@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.zjee.ml/about/index.html</loc>
+    
+    <lastmod>2019-12-29T09:53:54.861Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.zjee.ml/2018/11/29/thrift-grama/</loc>
     
     <lastmod>2019-12-28T14:54:13.451Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://blog.zjee.ml/2018/11/29/learn-git/</loc>
     
     <lastmod>2019-12-28T14:53:56.906Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.zjee.ml/about/index.html</loc>
-    
-    <lastmod>2019-12-28T14:52:36.190Z</lastmod>
     
   </url>
   
