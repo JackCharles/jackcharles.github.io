@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.zjee.ml/2020/01/05/java-log-system/</loc>
+    
+    <lastmod>2020-01-05T03:38:44.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.zjee.ml/about/index.html</loc>
     
     <lastmod>2019-12-29T10:00:19.495Z</lastmod>
