@@ -141,7 +141,7 @@
     <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">Contents</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、Synchronized"><span class="toc-text">一、Synchronized</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、Lock"><span class="toc-text">二、Lock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、ReadWriteLock"><span class="toc-text">三、ReadWriteLock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、相关概念"><span class="toc-text">四、相关概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、参考资料"><span class="toc-text">五、参考资料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">¶一、Synchronized</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">¶二、Lock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">¶三、ReadWriteLock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">¶四、相关概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">¶五、参考资料</span></a></li></ol>
     </div>
   </div><div class="post-content"><p>在Java多线程编程中，同步和互斥是一个不可避免的话题。Java为开发人员提供了以下几种锁机制：</p>
 <ol>
@@ -150,7 +150,7 @@
 <li><code>ReadWriteLock</code>接口</li>
 </ol>
 <p>这几种锁机制在日常编程中用的很多，但它们有什么联系和区别呢？</p>
-<h3 id="一、Synchronized"><a href="#一、Synchronized" class="headerlink" title="一、Synchronized"></a>一、Synchronized</h3><ol>
+<h3><a href="#yi-synchronized" class="header-anchor">¶</a><span id="yi-synchronized">一、Synchronized</span></h3><ol>
 <li><p><code>synchronized</code>关键字是Java内置的关键字，可以轻松实现临界区资源的同步互斥访问。synchronized关键字使用很简单，可以加在方法上或代码块上，用在方法声明中表示整个方法调用是互斥的，用在代码块上表示被包围的代码执行是互斥的，示例如下所示：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">consumer1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//synchronize 用在代码块上，表示该代码块互斥</span></span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123; </span><br><span class="line">        resource -- ;</span><br><span class="line">        System.out.println(<span class="string">" resource: "</span> + resource);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">   </span><br><span class="line"><span class="comment">//synchronize用在方法上，表示整个方法调用互斥</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">boolean</span> <span class="title">consumer2</span><span class="params">()</span></span>&#123; </span><br><span class="line">    resource -- ;</span><br><span class="line">    System.out.println(<span class="string">"resource: "</span> + resource);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//synchronize用在静态方法上，使用Class对象作为对象锁</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">boolean</span> <span class="title">consumer3</span><span class="params">()</span></span>&#123; </span><br><span class="line">    resource -- ;</span><br><span class="line">    System.out.println(<span class="string">"resource: "</span> + resource);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>synchronized</code>关键字需要一个<strong>锁对象</strong>,当代码执行到synchronized修饰的方法或包围的代码块时就会获取该锁对象的锁，本质上就是获取锁对象的监视器(monitor，可以理解为锁标记)，如果获取到锁就继续执行临界区代码，否则就一直等待。如果<code>synchronized</code>修饰的是一个<strong>非静态</strong>方法，那么锁对象就是这个<strong>对象本身</strong>；如果<code>synchronized</code>修饰的是一个<strong>静态</strong>方法，那么锁对象就是这个<strong>类对象</strong>。同理，我们在使用synchronized代码块时，需要提供一个锁对象，一般可用<code>this</code>表示使用对象本身作为锁对象，当然也可以使用其他自定义对象，比如 <code>new Object()</code>。这里需要注意一点，不要使用<code>String</code>或常用的数字对象去作为锁对象，因为他们在JVM缓存在一个常量池中，是一个共享对象，如果多处使用这些对象作为锁对象，可能会导致不可预期的死锁。</p>
@@ -167,7 +167,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="二、Lock"><a href="#二、Lock" class="headerlink" title="二、Lock"></a>二、Lock</h3><ol>
+<h3><a href="#er-lock" class="header-anchor">¶</a><span id="er-lock">二、Lock</span></h3><ol>
 <li><p>Lock是Java5开始提供的一个JDK层面的用于控制同步互斥的接口，它位于<code>java.util.concurrent.locks</code>包下。此外，该包下还有Condition和ReadWriteLock两兄弟，它们都是为多线程同步、互斥服务的，其类图如下：</p>
 <img src="/2019/08/24/java-lock-util/001.png" title="Lock家族类图">
 <p>我们可以看到Lock接口下一般供开发人员直接使用的实现是<code>ReentrantLock</code>，这个类基本解决了<code>synchronized</code>存在的不足，我们看一下Lock接口提供的方法：</p>
@@ -193,7 +193,7 @@
 </ol>
 </li>
 </ol>
-<h3 id="三、ReadWriteLock"><a href="#三、ReadWriteLock" class="headerlink" title="三、ReadWriteLock"></a>三、ReadWriteLock</h3><ol>
+<h3><a href="#san-readwritelock" class="header-anchor">¶</a><span id="san-readwritelock">三、ReadWriteLock</span></h3><ol>
 <li><p>JDK中除提供了基本的满足同步、互斥的Lock机制外，还提供了一种特殊的读写锁模型，该模型一定程度上降低了互斥要求，带来更好的性能体验。读写锁具体来说分为两方面：</p>
 <ul>
 <li>ReadLock：读锁不同线程可以重复获取（与可重入概念不一样），即一个资源是可以并发读的，资源加了读锁后只能再加读锁。</li>
@@ -205,7 +205,7 @@
 <p>上面演示了并发环境下ReadWriteLock的使用，这里需要注意的是最终的输出不是一个固定结果，如果writer1在3ms内获取到锁就不会输出<code>writer1被中断</code>（<code>w1.interrupt();</code>将会中断writer1里面的sleep），这个结果完全是随机的。虽然ReentrantReadWriteLock没实现Lock接口，但其内部类<code>ReentrantReadWriteLock.WriteLock</code>和<code>ReentrantReadWriteLock.ReadLock</code>实现了Lock接口，因此读写锁也具有Lock的全部特性。</p>
 </li>
 </ol>
-<h3 id="四、相关概念"><a href="#四、相关概念" class="headerlink" title="四、相关概念"></a>四、相关概念</h3><ol>
+<h3><a href="#si-xiang-guan-gai-nian" class="header-anchor">¶</a><span id="si-xiang-guan-gai-nian">四、相关概念</span></h3><ol>
 <li><p><strong>乐观锁/悲观锁</strong></p>
 <p>乐观锁和悲观锁不是一种具体的锁，而是对待并发的一种态度。<strong>悲观锁</strong>认为对于同一资源的并发访问一定会发生修改操作，不加锁的并发访问一定会出问题，因此一定要加锁。<strong>乐观锁</strong>则认为并发访问很少发生资源修改操作，即使发生也会采用不断尝试的方式更新资源，不加锁的并发访问是不会出问题的。悲观锁适合写操作多的场景，乐观锁适合读操作多的场景。Java中各种加锁编程就属于悲观锁范围，而使用concurrent包下的AtomicXXX实现原子操作就属于乐观锁范围，因为Atomic类型是使用<a href="https://segmentfault.com/a/1190000017943658" target="_blank" rel="noopener">CAS算法</a>实现原子操作的，并没有使用锁，属于无锁编程，一般来说乐观锁的性能好于悲观锁。</p>
 </li>
@@ -246,7 +246,7 @@
 <p>自旋锁关注的是在获取锁的过程中线程处所处状态，当一个线程在获取锁的时候，如果锁已经被其它线程获取，那么该线程将<strong>循环等待</strong>（不进入阻塞状态），然后不断的判断锁是否能够被成功获取，直到获取到锁才会退出循环。注意，自旋锁的设计是为了减少线程状态切换带来的开销（用户态-&gt;内核态，active-&gt;blocked）,当加锁区域的代码执行的非常快时，该设计能大大提高性能。而加锁区域执行缓慢时则相反，自旋锁不会释放CPU资源，如果长时间处于自旋状态将严重拖累系统性能，所以是否采用自旋锁需要根据需求而定。</p>
 </li>
 </ol>
-<h3 id="五、参考资料"><a href="#五、参考资料" class="headerlink" title="五、参考资料"></a>五、参考资料</h3><ol>
+<h3><a href="#wu-can-kao-zi-liao" class="header-anchor">¶</a><span id="wu-can-kao-zi-liao">五、参考资料</span></h3><ol>
 <li><a href="https://blog.csdn.net/justloveyou_/article/details/54972105" target="_blank" rel="noopener">Java 并发：Lock 框架详解</a></li>
 <li><a href="http://blog.itpub.net/31545684/viewspace-2375117/" target="_blank" rel="noopener">Java 种15种锁的介绍：公平锁，可重入锁，独享锁，互斥锁等等…</a></li>
 <li><a href="https://www.cnblogs.com/wzj4858/p/8215369.html" target="_blank" rel="noopener">javas的四种状态 无锁状态 偏向锁状态 轻量级锁状态 重量级锁状态</a></li>
