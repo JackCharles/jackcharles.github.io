@@ -5,11 +5,11 @@
  * p: 相位差
  */
 
-// 单位px
+// 振幅（px）
 var rList = [];
-// 这里实际是圆周分成的份数，该值越大，角速度越小
+// 角速度（弧度/ms）
 var wList = [];
-//初始相位，相对于w设置的，比如初始在第50份的角度
+//初始相位（弧度）
 var pList = [];
 
 //H5绘图相关
@@ -20,10 +20,10 @@ var frameDelay = 10;
 
 //用于绘制三角函数的点
 var sinPoint = [];
-//x轴增量, 每点增加0.5px
-var dx = 0.5;
-//绘制周期数
-var T = 2;
+//一个点每次向前移动的距离（px）                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+var dx = 0;
+//绘制图形的点数
+var ponitCnt = 0;
 
 function draw() {
     //清空画布
@@ -45,10 +45,9 @@ function draw() {
         ctx.stroke();
         ctx.closePath();
 
-        var process = pList[i] / wList[i];
-        console.log("process", process)
-        var x = r * Math.cos(2 * Math.PI * process);
-        var y = r * Math.sin(2 * Math.PI * process);
+        //相位
+        var x = r * Math.cos(pList[i]);
+        var y = r * Math.sin(pList[i]);
 
         ctx.beginPath();
         ctx.strokeStyle = "#FF0000";
@@ -58,7 +57,7 @@ function draw() {
 
         // 画导航线（最后一个圆的横坐标向右延申到y轴）
         if (i == rList.length - 1) {
-            finalX = circleMaxWidth * 2 + 10;
+            finalX = circleMaxWidth * 2 + 20;
             finalY = y + cY;
             ctx.moveTo(x + cX, y + cY);
             ctx.lineTo(finalX, finalY);
@@ -70,8 +69,11 @@ function draw() {
         cX += x;
         cY += y;
 
-        //核心：更新角度，用于下周期绘制
-        pList[i] = pList[i] + 1 > wList[i] ? 0 : pList[i] + 1;
+        //核心：更新相位，用于下周期绘制
+        pList[i] += wList[i] * frameDelay;
+        if (pList[i] > 2 * Math.PI) {
+            pList[i] -= 2 * Math.PI;
+        }
     });
 
     //画坐标系
@@ -81,8 +83,8 @@ function draw() {
     ctx.moveTo(circleMaxWidth + 10, drawing.clientHeight);
     ctx.lineTo(drawing.width, drawing.clientHeight);
     //Y轴
-    ctx.moveTo(circleMaxWidth * 2 + 10, drawing.clientHeight - circleMaxWidth);
-    ctx.lineTo(circleMaxWidth * 2 + 10, drawing.clientHeight + circleMaxWidth);
+    ctx.moveTo(circleMaxWidth * 2 + 20, drawing.clientHeight - circleMaxWidth);
+    ctx.lineTo(circleMaxWidth * 2 + 20, drawing.clientHeight + circleMaxWidth);
     ctx.stroke();
     ctx.closePath();
 
@@ -98,7 +100,7 @@ function draw() {
     ctx.closePath();
 
     // 画正弦曲线
-    if (sinPoint.length >= T * wList[0]) {
+    if (sinPoint.length >= ponitCnt) {
         sinPoint.pop();
     }
     sinPoint.unshift(finalY);
@@ -110,6 +112,15 @@ function draw() {
     }
     ctx.stroke();
     ctx.closePath();
+}
+
+
+function isEmpty(obj){
+    if(typeof obj == "undefined" || obj == null || obj == ""){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 
@@ -133,7 +144,7 @@ function fps2TimeDelay(f) {
  */
 function amp2IntList(amps) {
     var res = [];
-    amps.split("\n").forEach(s => {
+    amps.split("\n").filter(x=>!isEmpty(x)).forEach(s => {
         var amp = parseInt(s);
         if (isNaN(amp)) {
             alert("振幅必须是有效正整数");
@@ -145,39 +156,37 @@ function amp2IntList(amps) {
 }
 
 /**
- * 角速度帧的转换：弧度/s => 帧/周期
+ * 角速度转换： rad/s => rad/ms
  * @param {string} angs 角速度
- * @param {number} fps 帧率
  */
-function angularConvert(angs, fps) {
+function angularConvert(angs) {
     var res = [];
-    angs.split("\n").forEach(s => {
+    angs.split("\n").filter(x=>!isEmpty(x)).forEach(s => {
         var ang = parseFloat(s);
         if (isNaN(ang)) {
             alert("角速度必须是有效正数");
             return [];
         }
 
-        res.push(2 * Math.PI / ang * fps);
+        res.push(ang / 1000);
     });
     return res;
 }
 
 /**
- * 初始相位到帧的转换：弧度 => 帧
+ * 解析初始相位数据
  * @param {string} phase 初始相位
- * @param {Array} angs 周期帧数
  */
-function phaseConvert(phases, angs) {
+function phaseConvert(phases) {
     var res = [];
-    phases.split("\n").forEach((s, index) => {
+    phases.split("\n").filter(x=>!isEmpty(x)).forEach(s => {
         var ph = parseFloat(s);
-        if (isNaN(ph) || angs[index] === undefined) {
-            alert("初始相位必须是有效正数, 且数据条数与角速度一致");
+        if (isNaN(ph)) {
+            alert("初始相位必须是有效正数");
             return [];
         }
 
-        res.push(ph / (2 * Math.PI) * angs[index]);
+        res.push(ph);
     });
     return res;
 }
@@ -204,13 +213,13 @@ function init(amps, angs, phas, fps) {
     }
 
     //一周期多少帧
-    var angList = angularConvert(angs, parseInt(fps));
+    var angList = angularConvert(angs);
     if (angList.length === 0) {
         return false;
     }
 
     //初始偏移多少帧
-    var phaList = phaseConvert(phas, angList);
+    var phaList = phaseConvert(phas);
     if (phaList.length === 0) {
         return false;
     }
@@ -227,9 +236,13 @@ function init(amps, angs, phas, fps) {
     frameDelay = fd;
     circleMaxWidth = rList.reduce((total, curr) => total += curr, 0);
     sinPoint = [];
-    drawing.width = circleMaxWidth * 2 + wList[0] * T * dx + 10;
+	//总点数为2PI范围内打点的个数，具体跟角速度、帧率有关
+    ponitCnt = 2 * Math.PI / wList[0] / frameDelay * 2;
+	//每一弧度60个px
+    dx = wList[0] * frameDelay * 60;
+    drawing.width = circleMaxWidth * 2 + 20 + 758;
     drawing.height = circleMaxWidth * 2 + 20;
-    drawing.style.height = drawing.height / 2 + "px";
+    drawing.style.height = (drawing.height / 2) + "px";
     return true;
 }
 
@@ -241,7 +254,6 @@ function start() {
 }
 
 function pausePush(x) {
-    console.log(x)
     if (x.getAttribute("status") === "running") {
         clearInterval(timer);
         x.setAttribute("status", "paused");
@@ -264,7 +276,6 @@ function render() {
         return;
     }
 
-    console.log(rList, wList, pList, frameDelay);
     clearInterval(timer);
     play.setAttribute("status", "paused");
     play.innerHTML = "播放";
