@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <title>Draw</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="draw.css">
+</head>
+
+<body>
+    <div id="config">
+        <p>三角函数配置，每行对应一个函数：</p>
+        <div class="config-box">
+            <label>振幅(px)</label>
+            <br>
+            <textarea id="input-amp">200&#10;100&#10;50</textarea>
+        </div>
+
+        <div class="config-box">
+            <label>角速度(弧度/s)</label>
+            <br>
+            <textarea id="input-ang">1.7444&#10;3.4889&#10;10.4667</textarea>
+        </div>
+
+        <div class="config-box">
+            <label>初始相位(弧度)</label>
+            <br>
+            <textarea id="input-pha">0.8722&#10;1.7444&#10;2.0933</textarea>
+        </div>
+        <div class="config-box">
+            <label>帧率(帧/s)</label>
+            <br>
+            <input id="input-fps" type="number" value="200">
+            <br>
+            <button onclick="render()">绘制</button>
+            <button id="draw-play" onclick="pausePush(this)" status="paused">播放</button>
+        </div>
+    </div>
+ 
+    <div>
+        <canvas id="drawing">Drawing area.</canvas>
+        <script src="draw.js"></script>
+    </div>
+
+</body>
+
+</html>

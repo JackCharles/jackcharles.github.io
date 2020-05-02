@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.zjee.ml/2020/05/02/fourier-seriers-1/</loc>
+    
+    <lastmod>2020-05-02T09:39:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.zjee.ml/2020/05/02/fourier-seriers-1/fourier/</loc>
+    
+    <lastmod>2020-05-02T09:12:41.455Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.zjee.ml/2020/04/19/thread-local/</loc>
     
     <lastmod>2020-04-19T10:08:55.000Z</lastmod>

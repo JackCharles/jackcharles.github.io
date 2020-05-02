@@ -1,0 +1,28 @@
+#drawing {
+    border: 1px solid red;
+}
+
+.config-box {
+    float: left;
+    padding-right: 10px;
+}
+
+.config-box textarea {
+    height: 80px;
+    width: 120px;
+    margin-top: 10px;
+}
+
+.config-box input {
+    width: 120px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.config-box button {
+    width: 60px;
+}
+
+#config {
+    height: 160px;
+}
