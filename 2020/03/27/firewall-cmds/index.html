@@ -139,34 +139,44 @@
     </header>
 
     <div class="post-content"><ol>
-<li><p>开启端口</p>
+<li>
+<p>开启端口</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=&lt;port&gt;/&lt;protocol&gt; --permanent </span><br><span class="line"><span class="meta">#</span>&lt;port&gt; 要开启的端口 </span><br><span class="line"><span class="meta">#</span>&lt;protocol&gt; 协议：tcp、udp</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>关闭端口</p>
-<p><code>firewall-cmd --zone=public --remove-port=&lt;port&gt;/&lt;protocol&gt; --permanent</code> </p>
+<li>
+<p>关闭端口</p>
+<p><code>firewall-cmd --zone=public --remove-port=&lt;port&gt;/&lt;protocol&gt; --permanent</code></p>
 </li>
-<li><p>批量开启区间端口</p>
+<li>
+<p>批量开启区间端口</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=&lt;start&gt;-&lt;end&gt;/&lt;protocol&gt; --permanent</span><br><span class="line"><span class="meta">#</span>&lt;start&gt;、&lt;end&gt;：要开启的区间[start, end]</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>开启、关闭、重启防火墙命令： </p>
+<li>
+<p>开启、关闭、重启防火墙命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl start/stop/restart firewalld.service </span><br><span class="line"><span class="meta">#</span> 或者 </span><br><span class="line">service firewalld start/stop/restart</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>重新载入防火墙配置（更新配置后需要执行此命令）：</p>
-<p><code>firewall-cmd --reload</code></p>
+<li>
+<p>重新载入防火墙配置（更新配置后需要执行此命令）：</p>
+<p><code>firewall-cmd --reload </code></p>
 </li>
-<li><p>查看开放的端口：</p>
-<p><code>firewall-cmd --permanent --list-port</code></p>
+<li>
+<p>查看开放的端口：</p>
+<p><code>firewall-cmd --permanent --list-port </code></p>
 </li>
-<li><p>禁用防火墙 </p>
-<p><code>systemctl stop firewalld</code></p>
+<li>
+<p>禁用防火墙</p>
+<p><code>systemctl stop firewalld </code></p>
 </li>
-<li><p>设置开机启动 </p>
-<p><code>systemctl enable firewalld</code></p>
+<li>
+<p>设置开机启动</p>
+<p><code>systemctl enable firewalld </code></p>
 </li>
-<li><p>停止防火墙并禁用开机启动 </p>
-<p><code>systemctl disable firewalld</code></p>
+<li>
+<p>停止防火墙并禁用开机启动</p>
+<p><code>systemctl disable firewalld </code></p>
 </li>
-<li><p>查看状态</p>
+<li>
+<p>查看状态</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl status firewalld </span><br><span class="line"><span class="meta">#</span> 或者 </span><br><span class="line">firewall-cmd --state</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
