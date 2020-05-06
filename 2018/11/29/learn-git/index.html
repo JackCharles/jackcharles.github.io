@@ -141,67 +141,56 @@
     <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">Contents</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、创建本地仓库的两种途径："><span class="toc-text">¶1、创建本地仓库的两种途径：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、git-config文件配置："><span class="toc-text">¶2、git config文件配置：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3、将本地仓库和远程仓库关联（适用于git-init创建的仓库）："><span class="toc-text">¶3、将本地仓库和远程仓库关联（适用于git init创建的仓库）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4、将本地信息推送到远程"><span class="toc-text">¶4、将本地信息推送到远程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5、添加文件，修改，提交修改"><span class="toc-text">¶5、添加文件，修改，提交修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6、创建、切换分支"><span class="toc-text">¶6、创建、切换分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7、版本回退"><span class="toc-text">¶7、版本回退</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8、保存工作现场"><span class="toc-text">¶8、保存工作现场</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9、标签管理"><span class="toc-text">¶9、标签管理</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、创建本地仓库的两种途径："><span class="toc-text">1、创建本地仓库的两种途径：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、git-config文件配置："><span class="toc-text">2、git config文件配置：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3、将本地仓库和远程仓库关联（适用于git-init创建的仓库）："><span class="toc-text">3、将本地仓库和远程仓库关联（适用于git init创建的仓库）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4、将本地信息推送到远程"><span class="toc-text">4、将本地信息推送到远程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5、添加文件，修改，提交修改"><span class="toc-text">5、添加文件，修改，提交修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6、创建、切换分支"><span class="toc-text">6、创建、切换分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7、版本回退"><span class="toc-text">7、版本回退</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8、保存工作现场"><span class="toc-text">8、保存工作现场</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9、标签管理"><span class="toc-text">9、标签管理</span></a></li></ol>
     </div>
-  </div><div class="post-content"><h4 id="1、创建本地仓库的两种途径："><a class="header-anchor" href="#1、创建本地仓库的两种途径：">¶</a>1、创建本地仓库的两种途径：</h4>
-<ol>
-<li>
-<p>从远程仓库克隆一份：<code>git clone [remote git url]</code></p>
+  </div><div class="post-content"><h4 id="1、创建本地仓库的两种途径："><a href="#1、创建本地仓库的两种途径：" class="headerlink" title="1、创建本地仓库的两种途径："></a>1、创建本地仓库的两种途径：</h4><ol>
+<li><p>从远程仓库克隆一份：<code>git clone [remote git url]</code></p>
 </li>
-<li>
-<p>创建一个目录：<code>mkdir git</code>, 然后用 <code>git init</code> 去初始化这个目录，使之成为一个git仓库。</p>
+<li><p>创建一个目录：<code>mkdir git</code>, 然后用 <code>git init</code> 去初始化这个目录，使之成为一个git仓库。</p>
 </li>
 </ol>
-<h4 id="2、git-config文件配置："><a class="header-anchor" href="#2、git-config文件配置：">¶</a>2、git config文件配置：</h4>
-<ol>
+<h4 id="2、git-config文件配置："><a href="#2、git-config文件配置：" class="headerlink" title="2、git config文件配置："></a>2、git config文件配置：</h4><ol>
 <li>配置全局用户名：<code>git config --global user.name &quot;xxxxxx&quot;</code></li>
 <li>配置全局E-mail：<code>git config --global user.email &quot;xxxxxx@xx.com&quot;</code>, 如果需要在项目中配置不同的用户名和邮件，则只需要在项目目录下执行上面的命令，不带 <code>--global</code> 即可。</li>
 <li>查看配置文件: <code>git config --list</code></li>
 </ol>
-<h4 id="3、将本地仓库和远程仓库关联（适用于git-init创建的仓库）："><a class="header-anchor" href="#3、将本地仓库和远程仓库关联（适用于git-init创建的仓库）：">¶</a>3、将本地仓库和远程仓库关联（适用于git init创建的仓库）：</h4>
-<ol>
+<h4 id="3、将本地仓库和远程仓库关联（适用于git-init创建的仓库）："><a href="#3、将本地仓库和远程仓库关联（适用于git-init创建的仓库）：" class="headerlink" title="3、将本地仓库和远程仓库关联（适用于git init创建的仓库）："></a>3、将本地仓库和远程仓库关联（适用于git init创建的仓库）：</h4><ol>
 <li>添加远程仓库：<code>git remote add [host-name] [git-url]</code>, 一般host-name取<code>origin</code>, 这也是git默认主机名。</li>
 <li>拉取本地还没有的远程仓库的信息：<code>git fetch [host-name] [branch-name]</code>,从远程仓库下载制定分支的信息到本地，但不会与本地的仓库合并，需手动合并<code>git merge [host-name] [branch-name]</code>，如：<code>git fetch origin dev; git merge origin dev;</code></li>
 <li>拉取远程信息，并尝试与本地合并(相当于fetch和merge的合体)：<code>git pull [host-name] [branch-name]</code>, 有冲突需手动解决再手动合并。</li>
 <li>查看远程仓库信息：<code>git remote -v</code>。</li>
 </ol>
-<h4 id="4、将本地信息推送到远程"><a class="header-anchor" href="#4、将本地信息推送到远程">¶</a>4、将本地信息推送到远程</h4>
-<ol>
+<h4 id="4、将本地信息推送到远程"><a href="#4、将本地信息推送到远程" class="headerlink" title="4、将本地信息推送到远程"></a>4、将本地信息推送到远程</h4><ol>
 <li><code>git push [host] [branch]</code>，如果远程没有对应分支，则需要带上 <code>-u</code> 参数创建相应分支。</li>
 <li>如果本地分支没有与远程分支关联，则需要：<code>git branch --set-upstream [remote-branch]</code>建立关联。</li>
 <li>如果远程分支有其他人提交过，则必须先<code>git pull</code>,尝试与本地合并合并（有冲突解决冲突）后才可以push。</li>
 </ol>
-<h4 id="5、添加文件，修改，提交修改"><a class="header-anchor" href="#5、添加文件，修改，提交修改">¶</a>5、添加文件，修改，提交修改</h4>
-<ol>
+<h4 id="5、添加文件，修改，提交修改"><a href="#5、添加文件，修改，提交修改" class="headerlink" title="5、添加文件，修改，提交修改"></a>5、添加文件，修改，提交修改</h4><ol>
 <li>添加文件到暂存区：<code>git add [file-name or directory-name]</code>,可以使用通配符。</li>
 <li>所有做的修改都需要使用<code>git add</code>后在进行<code>git commit</code>操作。</li>
-<li>提交修改到本地仓库：<code>git commit -m '说明信息'</code>。</li>
-<li>撤销修改/恢复删除文件：<code>git check --[file-name]</code>，注意两个’-’。</li>
+<li>提交修改到本地仓库：<code>git commit -m &#39;说明信息&#39;</code>。</li>
+<li>撤销修改/恢复删除文件：<code>git check --[file-name]</code>，注意两个’-‘。</li>
 <li>查看git状态：<code>git status</code>。</li>
 <li>查看commit日志：<code>git log</code>，单行显示：<code>git log --pretty=oneline</code>。</li>
 <li>查看上次的修改：<code>git diff file-name</code>。</li>
 <li>从暂存区删除一个文件：<code>git rm file-name</code>。</li>
 </ol>
-<h4 id="6、创建、切换分支"><a class="header-anchor" href="#6、创建、切换分支">¶</a>6、创建、切换分支</h4>
-<ol>
+<h4 id="6、创建、切换分支"><a href="#6、创建、切换分支" class="headerlink" title="6、创建、切换分支"></a>6、创建、切换分支</h4><ol>
 <li>创建并切换分支：<code>git checkout -b [branch-name]</code>，他相当于<code>git branch [branch-name]; git checkout [branch-name];</code>。</li>
 <li>切换分支：<code>git checkout [branch-name]</code>。</li>
 <li>删除分支：<code>git branch -d &lt;name&gt;</code>，使用<code>-D</code>强行删除。</li>
 <li>查看分支合并情况：<code>git log --graph --pretty=oneline --abbrev-commit</code></li>
 </ol>
-<h4 id="7、版本回退"><a class="header-anchor" href="#7、版本回退">¶</a>7、版本回退</h4>
-<ol>
+<h4 id="7、版本回退"><a href="#7、版本回退" class="headerlink" title="7、版本回退"></a>7、版本回退</h4><ol>
 <li>本地仓库回退：<code>git reset --hard HEAD^</code>，一个<code>^</code>表示回退一个版本，两个<code>^^</code>表示回退两个版本，一次类推，回退100个版本可以这样写<code>HEAD~100</code>，也可以指定回退到具体某个版本<code>git reset --hard 1094adb</code>。</li>
 <li>重返未来：使用<code>git reflog</code>查看操作历史，找到要回去的版本号，使用1中命令即可回到未来。</li>
 </ol>
-<h4 id="8、保存工作现场"><a class="header-anchor" href="#8、保存工作现场">¶</a>8、保存工作现场</h4>
-<ol>
+<h4 id="8、保存工作现场"><a href="#8、保存工作现场" class="headerlink" title="8、保存工作现场"></a>8、保存工作现场</h4><ol>
 <li><code>git stash</code>，保存工作现场后，working dir就是干净的，这时就可以创建别的分支，进行别的工作，比如紧急修复bug场景。PS：如果当前工作区不干净git不允许创建新的分支。</li>
 <li>恢复工作区：<code>git stash pop</code>，它相当于<code>git stash apply; git stash drop;</code>，恢复并删除stash内容。</li>
 </ol>
-<h4 id="9、标签管理"><a class="header-anchor" href="#9、标签管理">¶</a>9、标签管理</h4>
-<ol>
-<li>commit打标签：<code>$ git tag v0.9 [-m '说明文字'] f52c633</code>，可以省略commit号，默认打在最新commit上。</li>
+<h4 id="9、标签管理"><a href="#9、标签管理" class="headerlink" title="9、标签管理"></a>9、标签管理</h4><ol>
+<li>commit打标签：<code>$ git tag v0.9 [-m &#39;说明文字&#39;] f52c633</code>，可以省略commit号，默认打在最新commit上。</li>
 <li>使用<code>git show tag-name</code>查看说明文字。</li>
 <li>使用<code>git tag</code>查看所有标签。</li>
 <li>使用<code>git tag -d v0.1</code>删除标签。</li>

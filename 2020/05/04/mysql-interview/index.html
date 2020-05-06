@@ -141,10 +141,9 @@
     <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">Contents</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">一、存储引擎</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">二、 索引</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">三、锁与事务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-text">四、零散问题</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、存储引擎"><span class="toc-text">一、存储引擎</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、-索引"><span class="toc-text">二、 索引</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、锁与事务"><span class="toc-text">三、锁与事务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、零散问题"><span class="toc-text">四、零散问题</span></a></li></ol>
     </div>
-  </div><div class="post-content"><h1>一、存储引擎</h1>
-<p>MySQL常见引擎对比：</p>
+  </div><div class="post-content"><h1 id="一、存储引擎"><a href="#一、存储引擎" class="headerlink" title="一、存储引擎"></a>一、存储引擎</h1><p>MySQL常见引擎对比：</p>
 <table>
 <thead>
 <tr>
@@ -158,8 +157,7 @@
 <th>关注点</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td><strong>MylSAM</strong></td>
 <td>全文、B Tree</td>
 <td>N</td>
@@ -199,19 +197,15 @@
 <td>-</td>
 <td>归档</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>MyISAM适用于只读取不写入的场景，比如ETL同步。</p>
 <p>InnoDB是MySQL默认引擎，也是后端开发首选。</p>
-<h1>二、 索引</h1>
-<ol>
-<li>
-<p><strong>什么是索引？</strong></p>
+<h1 id="二、-索引"><a href="#二、-索引" class="headerlink" title="二、 索引"></a>二、 索引</h1><ol>
+<li><p><strong>什么是索引？</strong></p>
 <p>答：索引是一种数据结构，用于帮助我们更快的进行数据查找。</p>
 </li>
-<li>
-<p>MySQL的索引分类。</p>
-<p>答：MySQL索引按不同的有不同的分类标准，大致如下(MECE)。</p>
+<li><p>MySQL的索引分类。</p>
+<p>答：MySQL索引按不同的有不同的分类标准，大致如下(MECE)。  </p>
 <ul>
 <li>按索引字段数量：单列索引、联合索引（最走匹配原则）</li>
 <li>按索引类型（逻辑上）：主键索引（未定义主键，找非空唯一索引或rowid）、唯一索引、全文索引、普通索引、空间索引（只能建立在空间数据类型，比如GEO、POINT等）。</li>
@@ -219,12 +213,10 @@
 <li>按存物理储结构分类：聚集（聚簇）索引、非聚集索引（二级索引、辅助索引）</li>
 </ul>
 </li>
-<li>
-<p><strong>索引都使用什么样的数据结构？</strong></p>
+<li><p><strong>索引都使用什么样的数据结构？</strong></p>
 <p>答：索引的实现与具体引擎有关，MySQL中常见的有Hash（Memory显示支持）、B树、R树等，InnoDB默认使用B+树。</p>
 </li>
-<li>
-<p><strong>各种索引数据结构的优劣势?</strong></p>
+<li><p><strong>各种索引数据结构的优劣势?</strong></p>
 <p>答：Hash索引只有Memory引擎显示支持，InnoDB使用伪hash，即在B+树上使用key的hash值进行索引查找，需要自己维护hash方法。原生Hash索引中存储的是key的hash值和指向记录的指针，它的特性如下：</p>
 <ul>
 <li>Hash索引非常紧凑，且与索引key的数据类型和长度无关。</li>
@@ -237,18 +229,16 @@
 <p>B+树是一个平衡多叉树，每一层节点按关键字从小到大排序， 数据只存在于叶子节点，并组织成双向链表形式。各key检索效率相当，很方便的支持范围查找。</p>
 <p><img src="b+tree.png" alt="B+树"></p>
 </li>
-<li>
-<p><strong>为什么用B+树而不用其他树？</strong></p>
+<li><p><strong>为什么用B+树而不用其他树？</strong></p>
 <p>答：所有二叉树都有一个问题，就是随着数据量增大高度变大（logn），IO次数增加，B树层数较低，一般3-4层。如果是非平衡二叉树，还可能有退化成链表的问题。</p>
-<p><em><strong>B树 VS B+树：</strong></em></p>
+<p><strong><em>B树 VS B+树：</em></strong></p>
 <ul>
 <li>B+树非叶子节点不存实际数据，占用空间更小，一次IO能读取到内存的关键字也就越多，相对磁盘IO次数降低了。</li>
 <li>B+树查询效率很稳定，每个关键字走的路径长度一致。</li>
 <li>B+树所有数据存叶子节点，并且叶子节点以双向组织，非常适合扫库和范围查找，而B树需要按中根遍历之类的。</li>
 </ul>
 </li>
-<li>
-<p><strong>聚集索引和非聚集索引</strong></p>
+<li><p><strong>聚集索引和非聚集索引</strong></p>
 <p>答：聚集索引（clustered index）：</p>
 <ul>
 <li>叶子节点存储的就是整行数据，直接通过索引可以拿到数据，对于InnoDB表，聚集索引就是整个表，整个表就是一个聚集索引。</li>
@@ -261,32 +251,26 @@
 <li>MyISAM不支持聚集索引。</li>
 </ul>
 </li>
-<li>
-<p><strong>覆盖索引：</strong> SQL只需要通过索引就可以返回需要的数据，而不需要通过二级索引查到主键后再去查询数据，一般覆盖索引都是联合索引，通过限制其中一个值去查另外一个值。Extra中有’Using Index’表示使用了覆盖索引，覆盖索引是提升性能的重要手段之一。</p>
+<li><p><strong>覆盖索引：</strong> SQL只需要通过索引就可以返回需要的数据，而不需要通过二级索引查到主键后再去查询数据，一般覆盖索引都是联合索引，通过限制其中一个值去查另外一个值。Extra中有’Using Index’表示使用了覆盖索引，覆盖索引是提升性能的重要手段之一。</p>
 <p><img src="cover-index.png" alt="cover-index"></p>
 </li>
-<li>
-<p><strong>非聚簇索引一定会回表查询吗?</strong></p>
+<li><p><strong>非聚簇索引一定会回表查询吗?</strong></p>
 <p>答：不一定，如果查询的字段全部命中索引就不需要查表。</p>
 </li>
-<li>
-<p><strong>全文索引：</strong> 全文索引就像一个搜索引擎，对文本分词后进行统计索引，全文索引分为自然语言全文索引和布尔全文索引，后者可以在查询是使用一些修饰符号限定取什么或不取什么。MySQL对全文索引支持很有限，一般需要配置第三方插件比如Sphinx、Lucene使用，建议直接上ES。</p>
+<li><p><strong>全文索引：</strong> 全文索引就像一个搜索引擎，对文本分词后进行统计索引，全文索引分为自然语言全文索引和布尔全文索引，后者可以在查询是使用一些修饰符号限定取什么或不取什么。MySQL对全文索引支持很有限，一般需要配置第三方插件比如Sphinx、Lucene使用，建议直接上ES。</p>
 </li>
-<li>
-<p><strong>空间索引：</strong> 空间索引只针对于空间数据类型，比如GEOMETRY、POINT 、LINESTRING 等，很少使用。</p>
+<li><p><strong>空间索引：</strong> 空间索引只针对于空间数据类型，比如GEOMETRY、POINT 、LINESTRING 等，很少使用。</p>
 </li>
-<li>
-<p><strong>建立索引需要考虑那些因素？</strong></p>
+<li><p><strong>建立索引需要考虑那些因素？</strong></p>
 <p>答：字段的使用频率（频率高的字段设置索引）、区分度（越高越靠前）、字段长度（索引大小）、查询方式等。联合索引需要考虑字段顺序，查询时需要满足最左匹配原则。如果一个索引是(a,b,c)，则有如下规则：</p>
 <ul>
 <li>索引块先按a排序，如果a是一样的在按b排序，最后按c排序，这很重要，理解B+树的结构就能推断出一个查询是否走索引。</li>
-<li>**最左匹配原则：**最左优先，以最左边的为起点任何连续的索引都能匹配上。同时遇到范围查询(&gt;、&lt;、between、like)就会停止匹配。注意，这与字段在SQL中写的顺序无关，MySQL会自动按索引顺序重排，我们判断是否走索引时也可先重排再判断。</li>
+<li><strong>最左匹配原则：</strong>最左优先，以最左边的为起点任何连续的索引都能匹配上。同时遇到范围查询(&gt;、&lt;、between、like)就会停止匹配。注意，这与字段在SQL中写的顺序无关，MySQL会自动按索引顺序重排，我们判断是否走索引时也可先重排再判断。</li>
 <li>字符串的like操作只有前缀匹配时才能走索引。</li>
 <li>示例参考：<a href="https://blog.csdn.net/sinat_41917109/article/details/88944290" target="_blank" rel="noopener">https://blog.csdn.net/sinat_41917109/article/details/88944290</a></li>
 </ul>
 </li>
-<li>
-<p><strong>没有使用到索引的情况</strong></p>
+<li><p><strong>没有使用到索引的情况</strong></p>
 <ul>
 <li>使用!=, !&gt;, not in, not like等负向查询</li>
 <li>where或order by中使用了数学运算或函数</li>
@@ -296,8 +280,7 @@
 <li>当使用联合索引时，不满足最左匹配原则的字段无法使用索引，或部分使用索引。</li>
 </ul>
 </li>
-<li>
-<p><strong>索引下推（index condition pushdown）</strong></p>
+<li><p><strong>索引下推（index condition pushdown）</strong></p>
 <ul>
 <li>索引下推时=是MySQL5.6及以后推出的一个优化功能，默认开启。</li>
 <li>InnoDB引擎下，如果一个二级联合索引被部分命中（不完全符合最左原则），此时MySQL不会根据命中条件去MySQL取回全部数据，然后交给Server再次过滤。而是筛选出的index中（叶子节点）继续过滤后续条件，直到完全符合筛选条件，最后拿着这些主键去查询数据。</li>
@@ -307,18 +290,14 @@
 </ul>
 <p><img src="icp.png" alt="icp"></p>
 </li>
-<li>
-<p><strong>慢SQL排查</strong> ：参考：<a href="https://www.cnblogs.com/tufujie/p/9413852.html" target="_blank" rel="noopener">https://www.cnblogs.com/tufujie/p/9413852.html</a></p>
+<li><p><strong>慢SQL排查</strong> ：参考：<a href="https://www.cnblogs.com/tufujie/p/9413852.html" target="_blank" rel="noopener">https://www.cnblogs.com/tufujie/p/9413852.html</a></p>
 </li>
 </ol>
-<h1>三、锁与事务</h1>
-<ol>
-<li>
-<p><strong>什么是事务？</strong></p>
+<h1 id="三、锁与事务"><a href="#三、锁与事务" class="headerlink" title="三、锁与事务"></a>三、锁与事务</h1><ol>
+<li><p><strong>什么是事务？</strong></p>
 <p>答：事务是一系列对系统中数据的访问操作所组成的执行单元，它们满足ACID特性。</p>
 </li>
-<li>
-<p><strong>事务的特性（ACID）?</strong></p>
+<li><p><strong>事务的特性（ACID）?</strong></p>
 <p>答：ACID具体解释如下：</p>
 <ul>
 <li>A(Atomicity，原子性)：一个事务中的操作，要么全部成功执行，要么全部不执行。</li>
@@ -327,8 +306,7 @@
 <li>D(Durability，持久性)：一旦事务提交，它对数据库的变更就是永久性的，即使宕机也能恢复到事务提交成功后的状态。</li>
 </ul>
 </li>
-<li>
-<p><strong>多个事务并发执行会有什么问题？</strong></p>
+<li><p><strong>多个事务并发执行会有什么问题？</strong></p>
 <p>答：事务并发存在的问题如下：</p>
 <ul>
 <li>脏读：A事务读取了B事务未提交的内容，然后B事务进行了回滚。（读取未提交数据）</li>
@@ -336,8 +314,7 @@
 <li>幻读：事务A开启事务，第一次读到m条数据，然后事务B插入一条数据，事务A再次读，发现读到了m+1条数据。（多次读数量不一致）</li>
 </ul>
 </li>
-<li>
-<p><strong>MySQL事务隔离级别？</strong></p>
+<li><p><strong>MySQL事务隔离级别？</strong></p>
 <p>答：MySQL四种事务隔离级别：</p>
 <ul>
 <li>READ UNCOMMITTED（未提交读）：其他事务可以读取到本事务未提交的数据。这个隔离级别解决不了任何问题，且性能提升不大，因此很少使用。</li>
@@ -346,12 +323,10 @@
 <li>SERIALIZABLE（可串行化）：最高隔离级别，解决所有问题，性能最差，也很少使用。</li>
 </ul>
 </li>
-<li>
-<p><strong>事务ACID与事务隔离级别的关系？</strong></p>
+<li><p><strong>事务ACID与事务隔离级别的关系？</strong></p>
 <p>答：MySQL通过不同程度的隔离级别，来不同程度解决并发事务带来的问题，最大程度保证事务的隔离（Isolation，ACID中的I）特性。</p>
 </li>
-<li>
-<p><strong>MySQL锁分类</strong></p>
+<li><p><strong>MySQL锁分类</strong></p>
 <p>答：为保证事务的正确执行，MySQL再进行各种操作时会对数据上锁，锁可以按不同标准分类如下：</p>
 <ul>
 <li>按排他性分：排他锁（x锁/写锁）、共享锁（s锁/读锁）,共享锁上锁后可再次加共享锁，但不能加排他锁，排他锁上锁后不能加任何锁。</li>
@@ -359,8 +334,7 @@
 <li>按锁的粒度分：表锁、行锁、页锁等。</li>
 </ul>
 </li>
-<li>
-<p><strong>InnoDB中的锁</strong></p>
+<li><p><strong>InnoDB中的锁</strong></p>
 <ul>
 <li>行锁（Record Lock）:行锁直接加在<code>唯一索引</code>上面，锁住的是key，如果没有唯一索引或未命中索引，则锁住整个表。</li>
 <li>间隙锁（Gap Lock）:锁定索引记录间隙，确保索引记录的间隙不变。间隙锁是针对事务隔离级别为可重复读或以上级别的，间隙锁锁定的是某段间隙，开区间（不包含检索key本身），主要功能是防止Insert操作，以解决幻读问题。</li>
@@ -368,21 +342,17 @@
 <li>在更新操作中如果没有用到索引，则间隙锁会锁定整个表，即整个表都无法插入。</li>
 </ul>
 </li>
-<li>
-<p><strong>InnoDB是如何实现各种隔离级别的？（大坑，有难度）</strong></p>
+<li><p><strong>InnoDB是如何实现各种隔离级别的？（大坑，有难度）</strong></p>
 <p>答：为优化数据库性能，InnoDB引入了MVCC（多版本并发控制）机制，在回答问题之前，先来了解以下MVCC相关内容。</p>
 <p>🔴 <strong>​MySQL中几种重要的日志</strong></p>
 <blockquote>
 <ol>
-<li>
-<p><code>Undo log</code>：它记录了每一次操作<strong>之前</strong>的数据版本，用于事务回滚和MVCC的数据可见性控制，Undo log分为Insert和Update两种，它属于引擎层逻辑（记录具体数据行）日志。简单来说，Undo log就是后悔药。</p>
+<li><p><code>Undo log</code>：它记录了每一次操作<strong>之前</strong>的数据版本，用于事务回滚和MVCC的数据可见性控制，Undo log分为Insert和Update两种，它属于引擎层逻辑（记录具体数据行）日志。简单来说，Undo log就是后悔药。</p>
 </li>
-<li>
-<p><code>Redo log</code>：事务操作中，对数据的更新并不是立刻写到磁盘的，而是将对<strong>数据页</strong>的物理修改记录到redo log中，在事务提交时，将redo log刷到磁盘。此时对数据而言，很可能只是在内存做了修改，与磁盘的数据页并不一致，称为脏页，InnoDB后台有一个线程专门用于刷脏。如果此时Server宕机，重启后也能从redo log逐步恢复已提交的事务。</p>
+<li><p><code>Redo log</code>：事务操作中，对数据的更新并不是立刻写到磁盘的，而是将对<strong>数据页</strong>的物理修改记录到redo log中，在事务提交时，将redo log刷到磁盘。此时对数据而言，很可能只是在内存做了修改，与磁盘的数据页并不一致，称为脏页，InnoDB后台有一个线程专门用于刷脏。如果此时Server宕机，重启后也能从redo log逐步恢复已提交的事务。</p>
 <p>采用Redo log而不是直接将数据刷盘的主要原因是性能问题，数据页刷盘是随机IO操作，写redo/undo log是顺序IO操作，一般顺序IO比随机IO快，在HDD中尤为显著。Redo log属于引擎层物理日志。</p>
 </li>
-<li>
-<p><code>binlog</code>：binlog是MySQL服务层维护的，跟引擎无关。它记录的是事务操作的内容，一般用于主从同步，或导入数据到其他存储引擎，如ES、Hive等。</p>
+<li><p><code>binlog</code>：binlog是MySQL服务层维护的，跟引擎无关。它记录的是事务操作的内容，一般用于主从同步，或导入数据到其他存储引擎，如ES、Hive等。</p>
 </li>
 </ol>
 </blockquote>
@@ -390,6 +360,8 @@
 <blockquote>
 <p>InnoDB在每行数据末尾记录了trx_id、db_roll_ptr两个字段，其中trx_id表示最后一个事务的ID，这个id在事务开启的时候就记录了。db_roll_ptr是一个指针，指向本次更新操作（删除实际是将删除标记置位，也是更新操作）对应的undo log位置（即操作前原始数据位置，<code>MVCC中insert undo log在事务提交后就会删除，因此单靠MVCC不能解决幻读问题，需要加锁辅助完成</code>）。因此，一条数据的多次更新操作会形成一条undo log链（也称为版本链）。</p>
 </blockquote>
+</li>
+</ol>
 <blockquote>
 <p>Innodb中存在purge线程，它会查询那些比现在<code>最老的活动事务</code>还早的undo log，并删除它们，从而保证undo log文件不至于无限增长。</p>
 </blockquote>
@@ -419,46 +391,37 @@
 <li>REPEATABLE READ：数据读取时不加锁，采用快照读，<code>快照（ReadView）在事务中第一次Select时创建，随后在整个事务中都使用这个快照</code>。数据的写入、修改、删除需要加X行锁（外键约束检查及唯一性检查时会封锁区间）。*  REPEATABLE READ级别解决幻读：MVCC + 乐观next-key lock实现。 *</li>
 <li>SERIALIZABLE：一个事务中读加S锁，写加X锁（NEXT-KEY LOCK），事务之间多个操作采用两段锁协议（加S1，加S2，加X1，释放X1，释放S2，释放S1）。保证串行化调度，可能存在死锁。</li>
 </ul>
-</li>
-<li>
-<p><strong>如何显示加锁</strong></p>
+<ol start="9">
+<li><p><strong>如何显示加锁</strong></p>
 <p>答：<code>select...from lock in share mode</code>加共享锁，<code>select..from for update</code>加排他锁，这种读也成为当前读。</p>
 </li>
 </ol>
-<h1>四、零散问题</h1>
-<ol>
-<li>
-<p><strong>为什么要尽量设定一个主键?</strong></p>
+<h1 id="四、零散问题"><a href="#四、零散问题" class="headerlink" title="四、零散问题"></a>四、零散问题</h1><ol>
+<li><p><strong>为什么要尽量设定一个主键?</strong></p>
 <p>答：确保数据行在整张数据表中的唯一性，推荐使用自增ID作为主键，原因如下：</p>
 <ul>
 <li>自增Id能保证主键索引的高效性，使用业务字段做主键，如果字段长度无法保证，可能存在索引过大的问题。另外业务字段无法保证插入的顺序，因此索引可能需要频繁调整移动，造成内存碎片，降低插入性能。</li>
 <li>业务字段存在被更新的可能性，如果更新的是主键的话，不仅操作繁琐，还可能违反唯一性约束，导致更新失败。另外，主键的更新意味着索引的变化（破坏了有序性），带来无意义的性能开销。</li>
 </ul>
 </li>
-<li>
-<p><strong>为什么mysql尽量要用Not NULL？</strong></p>
+<li><p><strong>为什么mysql尽量要用Not NULL？</strong></p>
 <p>答：NULL值在业务流程中很可能带来不必要的麻烦，比如常见的NPE。另外NULL值在MySQL中占用1字节空间，而空字符串则不占用空间。</p>
 </li>
-<li>
-<p><strong>char和varchar的区别</strong></p>
+<li><p><strong>char和varchar的区别</strong></p>
 <p>答：char是定长的，无论是否存满申请的长度，char都会占用那么多字符的空间。varchar申请的只是最大长度，实际占用为填充的字符串长度+1，最后一个字符存储使用的空间。在检索效率上char&gt;varchar，需要注意任何超出声明长度的字符串均无法插入char和varchar字段，如果长度无法确定，请考虑使用text，但该字段尽量不要用于索引、筛选条件之类的，会有性能问题。</p>
 </li>
-<li>
-<p><strong>int和int(11)并没有区别，都是4字节。</strong></p>
+<li><p><strong>int和int(11)并没有区别，都是4字节。</strong></p>
 </li>
-<li>
-<p><strong>超大分页怎么处理优化</strong></p>
+<li><p><strong>超大分页怎么处理优化</strong></p>
 <p>答：需要注意，MySQL的limit是先load offset+N行，然后放弃前offset行，这样效率很低。一种可行办法是先定位Id，再关联数据：<code>select a.* from t1 a, (select id from t1 where xxx limit 100000, 20) b where a.id = b.id</code>，上面这条SQL先limit查id，由于覆盖索引，这条SQL执行速度会很快。如果id连续性较好，还可以直接使用<code>where id&gt;100000 limit 20</code>，效果更好。</p>
 </li>
-<li>
-<p><strong>MySQL分库分表</strong></p>
+<li><p><strong>MySQL分库分表</strong></p>
 <p>答：一般按水平和垂直两个方向分割：</p>
 <ul>
 <li>垂直分表：即将一部分不常用、数据较大的字段分出去单独成立为扩展表。</li>
 <li>垂直分库：一般需要结合实际业务，按业务进行库的拆分，如用户、订单、商品拆为3个库，单独放在3个服务器上，防止单机性能瓶颈。</li>
 <li>水平分表：一般按某些规则，比如订单号取模，将数据分到不同的表中，但这些表还在一个库中，还是存在单机瓶颈问题，一般不采用。</li>
-<li>水平分库分表：将单表数据切分到多个机器上，每个机器有相同的库和表。水平分库分表切分规则一般有如下几种：
-<ol>
+<li>水平分库分表：将单表数据切分到多个机器上，每个机器有相同的库和表。水平分库分表切分规则一般有如下几种：<ol>
 <li>区间划分（RANGE）：比如流水号0-10000在一个表，10001-20000在另一个表。</li>
 <li>HASH取模：比如按订单号取模分配到到对应机器，可能存在扩容的麻烦，考虑一致性hash（还是存在少量数据迁移）。</li>
 <li>地理区域</li>
@@ -467,11 +430,9 @@
 </li>
 </ul>
 </li>
-<li>
-<p><strong>存储过程</strong>：互联网行业用的少，主要是需求变动太频繁，不好维护。银行用多（银行核心业务不用MySQL，外围产品可能使用），主要考虑数据安全性。</p>
+<li><p><strong>存储过程</strong>：互联网行业用的少，主要是需求变动太频繁，不好维护。银行用多（银行核心业务不用MySQL，外围产品可能使用），主要考虑数据安全性。</p>
 </li>
-<li>
-<p><strong>关系型数据库范式建模</strong></p>
+<li><p><strong>关系型数据库范式建模</strong></p>
 <ul>
 <li>第一范式：每个属性都是原子的，不可再分。（存在数据冗余、插入异常、删除异常、更新异常等问题）</li>
 <li>第二范式：非主属性完全依赖<code>码</code>，消除部分函数依赖。即消除(x, y) =&gt; z 且 (x) =&gt; z的情况。</li>
