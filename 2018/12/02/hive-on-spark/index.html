@@ -179,23 +179,23 @@
 </li>
 </ol>
 <h3 id="五、其他配置"><a href="#五、其他配置" class="headerlink" title="五、其他配置"></a>五、其他配置</h3><ol>
-<li>你以为这就完了？没有，CDH版本的Hive与Spark并没有联系，所以需要我们手动将spark lib中的<code>spark-assembly-1.6.0-cdh5.15.0-hadoop2.6.0-cdh5.15.0.jar</code>拷贝到hive lib下，hive才能与spark建立联系。</li>
-<li>理论上一切OK了，但你可能会发现在hive中使用spark引擎时返回3号错误，总之就是spark运行不正常，这时可以使用spark自带的example进行测试诊断（cd到spark bin目下）：<code>./spark-submit --master yarn --class org.apache.spark.examples.SparkPi ../lib/spark-examples-1.6.0-cdh5.15.0-hadoop2.6.0-cdh5.15.0.jar 10</code>，具体example jar路径及文件名自行查看。运行起来后有一个异常解决一个异常，直到跑出结果为止，没本人测试中发现以下问题：</li>
+<li><p>你以为这就完了？没有，CDH版本的Hive与Spark并没有联系，所以需要我们手动将spark lib中的<code>spark-assembly-1.6.0-cdh5.15.0-hadoop2.6.0-cdh5.15.0.jar</code>拷贝到hive lib下，hive才能与spark建立联系。</p>
+</li>
+<li><p>理论上一切OK了，但你可能会发现在hive中使用spark引擎时返回3号错误，总之就是spark运行不正常，这时可以使用spark自带的example进行测试诊断（cd到spark bin目下）：<code>./spark-submit --master yarn --class org.apache.spark.examples.SparkPi ../lib/spark-examples-1.6.0-cdh5.15.0-hadoop2.6.0-cdh5.15.0.jar 10</code>，具体example jar路径及文件名自行查看。运行起来后有一个异常解决一个异常，直到跑出结果为止，没本人测试中发现以下问题：</p>
+<blockquote>
+<p><strong>没有jackson模块</strong>：WTF，官网下载的spark居然包都不带全，随后查了一下cdh版本确实没带jackson的相关包，然后去maven官网下载(三个都要下载)，放到<code>{HADOOP_HOME}/share/hadoop/common/lib</code>下，至于为什么放在这儿而不是spark lib，这是因为我们在前面配置了<code>SPARK_DIST_CLASSPATH</code>（看不明白就在shell中echo一下），它会加入到spark类路径下，这个路径就包含上面的<code>{HADOOP_HOME}/share/hadoop/common/lib</code>，而且它下面还有jackson的其他包，顺理成章就放这儿了。随后再试！</p>
+</blockquote>
+<blockquote>
+<p><strong>jackson版本问题</strong>：WTF，这回找到jackson了，但jackson内部抛异常了，上网查发现是版本问题，于是按热心网友推荐采用2.4.4的版本，这回不抛异常了！</p>
+</blockquote>
+<blockquote>
+<p><strong>无限ACCEPT</strong>：虽然异常是没了，可这个程序一直是ACCEPT（等一个小时了），然后又上网搜索找到部分答案，测试无果，再回头看前面的配置，发现sparkk-env.sh中<code>SPARK_MASTER_IP</code>和<code>SPARK_MASTER_HOST</code>跟那些傻屌网友一样配成了master，可是我的机器不叫master，所以yarn找不到执行机器，也就无法分配内存，遂更改为localhost(本篇文章开头配置已更改)，然后 everything is OK！<br></p>
+</blockquote>
+<blockquote>
+<p>如果你的机器内存较小，导致分配资源缓慢，可适当调整一下<code>${HADOOP_HOME}/etc/hadoop/capacity-scheduler.xml</code>中的<code>yarn.scheduler.capacity.maximum-am-resource-percent</code>，可以由0.1调整为0.5，它表示yarn所管理的资源中，最多可以有多少资源可以用来运行application master，即控制当前激活状态的应用，默认是10%，在我们自己机器上来说太小了，因此可适当调大比例。</p>
+</blockquote>
+</li>
 </ol>
-<hr>
-<ul>
-<li><p><strong>没有jackson模块</strong>：WTF，官网下载的spark居然包都不带全，随后查了一下cdh版本确实没带jackson的相关包，然后去maven官网下载(三个都要下载)，放到<code>{HADOOP_HOME}/share/hadoop/common/lib</code>下，至于为什么放在这儿而不是spark lib，这是因为我们在前面配置了<code>SPARK_DIST_CLASSPATH</code>（看不明白就在shell中echo一下），它会加入到spark类路径下，这个路径就包含上面的<code>{HADOOP_HOME}/share/hadoop/common/lib</code>，而且它下面还有jackson的其他包，顺理成章就放这儿了。随后再试！</p>
-<hr>
-</li>
-<li><p><strong>jackson版本问题</strong>：WTF，这回找到jackson了，但jackson内部抛异常了，上网查发现是版本问题，于是按热心网友推荐采用2.4.4的版本，这回不抛异常了！</p>
-<hr>
-</li>
-<li><p><strong>无限ACCEPT</strong>：虽然异常是没了，可这个程序一直是ACCEPT（等一个小时了），然后又上网搜索找到部分答案，测试无果，再回头看前面的配置，发现sparkk-env.sh中<code>SPARK_MASTER_IP</code>和<code>SPARK_MASTER_HOST</code>跟那些傻屌网友一样配成了master，可是我的机器不叫master，所以yarn找不到执行机器，也就无法分配内存，遂更改为localhost(本篇文章开头配置已更改)，然后 everything is OK！</p>
-<hr>
-</li>
-<li><p>如果你的机器内存较小，导致分配资源缓慢，可适当调整一下<code>${HADOOP_HOME}/etc/hadoop/capacity-scheduler.xml</code>中的<code>yarn.scheduler.capacity.maximum-am-resource-percent</code>，可以由0.1调整为0.5，它表示yarn所管理的资源中，最多可以有多少资源可以用来运行application master，即控制当前激活状态的应用，默认是10%，在我们自己机器上来说太小了，因此可适当调大比例。</p>
-</li>
-</ul>
 <hr>
 <ol start="3">
 <li>终极测试：<img src="/2018/12/02/hive-on-spark/001.png" title="Hive on Spark 测试结果"></li>
