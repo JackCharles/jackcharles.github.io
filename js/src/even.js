@@ -18,13 +18,6 @@
     if (this.config.fancybox) {
       this.fancybox();
     }
-	
-	/*
-    if (leancloud.app_id && leancloud.app_key) {
-      this.recordReadings();
-    }
-	*/
-	
     if (this.config.pjax) {
       this.pjax();
     }
@@ -149,86 +142,6 @@
       });
     }
   };
-
-/*
-  Even.prototype.recordReadings = function () {
-    if (typeof AV !== 'object') return;
-
-    var $visits = $('.post-visits');
-    var Counter = AV.Object.extend('Counter');
-    if ($visits.length === 1) {
-      addCounter(Counter);
-    } else {
-      showTime(Counter);
-    }
-
-    function updateVisits(dom, time) {
-      var readText = dom.text().replace(/(\d+)/i, time)
-      dom.text(readText);
-    }
-
-    function addCounter(Counter) {
-      var query = new AV.Query(Counter);
-
-      var url = $visits.data('url').trim();
-      var title = $visits.data('title').trim();
-
-      query.equalTo('url', url);
-      query.find().then(function (results) {
-        if (results.length > 0) {
-          var counter = results[0];
-          counter.save(null, {
-            fetchWhenSave: true
-          }).then(function (counter) {
-            counter.increment('time', 1);
-            return counter.save();
-          }).then(function (counter) {
-            updateVisits($visits, counter.get('time'));
-          });
-        } else {
-          var newcounter = new Counter();
-          newcounter.set('title', title);
-          newcounter.set('url', url);
-          newcounter.set('time', 1);
-
-          var acl = new AV.ACL();
-          acl.setWriteAccess('*', true)
-          acl.setReadAccess('*', true)
-          newcounter.setACL(acl)
-
-          newcounter.save().then(function () {
-            updateVisits($visits, newcounter.get('time'));
-          });
-        }
-      }, function (error) {
-        // eslint-disable-next-line
-        console.log('Error:' + error.code + ' ' + error.message);
-      });
-    }
-
-    function showTime(Counter) {
-      $visits.each(function () {
-        var $this = $(this);
-        var query = new AV.Query(Counter);
-        var url = $this.data('url').trim();
-
-        query.equalTo('url', url);
-        query.find().then(function (results) {
-          if (results.length === 0) {
-            updateVisits($this, 0);
-          } else {
-            var counter = results[0];
-            updateVisits($this, counter.get('time'));
-          }
-        }, function (error) {
-          // eslint-disable-next-line
-          console.log('Error:' + error.code + ' ' + error.message);
-        });
-      })
-    }
-  };
-
- */
 
   Even.prototype.pjax = function () {
     if (location.hostname === 'localhost' || this.hasPjax) return;
