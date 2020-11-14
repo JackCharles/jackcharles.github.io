@@ -13,7 +13,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="记录职业生涯的点点滴滴..."><link rel="alternate" href="/atom.xml" title="江影不沉浮"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<meta name="description" content="记录职业生涯的点点滴滴..."><link rel="alternate" href="/atom.xml" title="Jack Charles"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
 <link rel="canonical" href="https://blog.zjee.me/page/2/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css"><script type="text/x-mathjax-config">
@@ -44,22 +44,17 @@
     s.parentNode.insertBefore(bp, s);
 })();
 </script>
-<script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
-  <script id="leancloud">
-    AV.init({
-      appId: "hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI",
-      appKey: "W2WW9ah2D4zfyhW3aYtKw3xD"
-    });
-  </script><script>
-  window.config = {"leancloud":{"app_id":"hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI","app_key":"W2WW9ah2D4zfyhW3aYtKw3xD"},"toc":true,"fancybox":true,"pjax":true,"latex":true};
+<script>
+  window.config = {"toc":true,"fancybox":true,"pjax":true,"latex":true};
 </script>
 
-    <title>江影不沉浮</title>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script>
+    <title>Jack Charles</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/." class="logo">江影不沉浮</a>
+    <a href="/." class="logo">Jack Charles</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -88,7 +83,7 @@
 </nav>
 <div class="container" id="mobile-panel">
       <header id="header" class="header"><div class="logo-wrapper">
-  <a href="/." class="logo">江影不沉浮</a>
+  <a href="/." class="logo">Jack Charles</a>
 </div>
 
 <nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
@@ -132,10 +127,12 @@
         </span><span class="post-category">
             <a href="/categories/Java/">Java</a>
             </span>
-        <span class="post-visits" data-url="/2019/11/19/java-primitive-and-wrapper-type/" data-title="Java基本类型与包装类型">
-          Visits 0
-        </span>
-        </div>
+        
+			<span id="/2019/11/19/java-primitive-and-wrapper-type/" class="leancloud_visitors" data-flag-title="Java基本类型与包装类型">
+				<span class="post-meta-item-text"> Visits </span>
+				<span class="leancloud-visitors-count">-</span>
+			</span>
+		</div>
     </header>
 
     <div class="post-content"><p>用了很久的Java，偶然闲谈中才发现自己竟然说不明白Java的基本类型与包装类型的关系，深感愧疚，便写下此篇文章，给自己长个记性。本文涉及的内容：Java基本类型与包装类型的区别及联系、自动装箱与拆箱、包装类型缓存及其它问题的思考。</p>
@@ -154,10 +151,12 @@
         </span><span class="post-category">
             <a href="/categories/Java/">Java</a>
             </span>
-        <span class="post-visits" data-url="/2019/08/24/java-lock-util/" data-title="Java中的同步、互斥机制">
-          Visits 0
-        </span>
-        </div>
+        
+			<span id="/2019/08/24/java-lock-util/" class="leancloud_visitors" data-flag-title="Java中的同步、互斥机制">
+				<span class="post-meta-item-text"> Visits </span>
+				<span class="leancloud-visitors-count">-</span>
+			</span>
+		</div>
     </header>
 
     <div class="post-content"><p>并发编程中，锁是一个永远绕不过的话题，深入认识Java中的同步、互斥机制是Java并发编程的必经之路。本篇文章就Java原生锁机制做一个简单的描述，让自己能全面宏观认识整个框架，在工作学习中能正确、高效使用Java同步、互斥相关工具。</p>
@@ -176,10 +175,12 @@
         </span><span class="post-category">
             <a href="/categories/大数据/">大数据</a>
             </span>
-        <span class="post-visits" data-url="/2018/12/02/hive-on-spark/" data-title="Hive on Spark 实践">
-          Visits 0
-        </span>
-        </div>
+        
+			<span id="/2018/12/02/hive-on-spark/" class="leancloud_visitors" data-flag-title="Hive on Spark 实践">
+				<span class="post-meta-item-text"> Visits </span>
+				<span class="leancloud-visitors-count">-</span>
+			</span>
+		</div>
     </header>
 
     <div class="post-content"><p>作为大数据开发人员，一直将精力放在业务上，很久没有关注大数据工具hive了。最近在写一个UDF函数时发现在hive(mr)引擎能通过，在spark引擎下却报错，于是就借此机会粗略研究一下hive on mr、hive on spark和spark sql等内容。本篇为整个系列开篇，介绍了MAC下Hive on spark的环境搭建，及遇到的坑。</p>
@@ -198,10 +199,12 @@
         </span><span class="post-category">
             <a href="/categories/后端开发基础/">后端开发基础</a>
             </span>
-        <span class="post-visits" data-url="/2018/11/29/thrift-grama/" data-title="RPC框架之Thrift">
-          Visits 0
-        </span>
-        </div>
+        
+			<span id="/2018/11/29/thrift-grama/" class="leancloud_visitors" data-flag-title="RPC框架之Thrift">
+				<span class="post-meta-item-text"> Visits </span>
+				<span class="leancloud-visitors-count">-</span>
+			</span>
+		</div>
     </header>
 
     <div class="post-content"><p>Thrift is an interface definition language and binary communication protocol used for defining and creating services for numerous languages. It forms a remote procedure call (RPC) framework and was developed at Facebook for "scalable cross-language services development".</p>
@@ -220,10 +223,12 @@
         </span><span class="post-category">
             <a href="/categories/后端开发基础/">后端开发基础</a>
             </span>
-        <span class="post-visits" data-url="/2018/11/29/learn-git/" data-title="代码版本控制系统Git">
-          Visits 0
-        </span>
-        </div>
+        
+			<span id="/2018/11/29/learn-git/" class="leancloud_visitors" data-flag-title="代码版本控制系统Git">
+				<span class="post-meta-item-text"> Visits </span>
+				<span class="leancloud-visitors-count">-</span>
+			</span>
+		</div>
     </header>
 
     <div class="post-content"><p>Git是目前世界上最先进的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。因此Git也是程序猿入门的必备技能之一，有了它我们就可以在代码的世界里穿越古今，自由翱翔！</p>
@@ -252,10 +257,10 @@
     <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
   </span>
 
-  <span class="copyright-year">&copy;2020<span class="heart">
+  <span class="copyright-year">&copy;2018 - 2020<span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
-    <span class="author">jackcharles</span>
+    <span class="author">Jack.Charles</span>
   </span>
 </div>
 </footer>
@@ -269,5 +274,25 @@
   <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
   <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
   <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
-</body>
+<script>
+		AV.init({
+			appId: 'hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI', 
+			appKey: 'W2WW9ah2D4zfyhW3aYtKw3xD'
+		});
+		var query = new AV.Query("Counter");
+		query.find().then(res => {
+			var dataMap = {}
+			res.map(item => dataMap[item.attributes.url] = item.attributes);
+			console.log(dataMap)
+			
+			var posts = document.getElementsByClassName("leancloud_visitors");
+			Array.prototype.forEach.call(posts, function (ele) {
+				var info = dataMap[ele.getAttribute("id")];
+				ele.getElementsByClassName("leancloud-visitors-count")[0]
+				.innerText= info === undefined?'0':info.time;
+			});
+		}).catch(e => {
+			console.log(e)
+		});
+    </script></body>
 </html>

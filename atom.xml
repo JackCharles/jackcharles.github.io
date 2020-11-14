@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>江影不沉浮</title>
+  <title>Jack Charles</title>
   
-  <subtitle>You can, just if you want!</subtitle>
+  
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.zjee.me/"/>
@@ -10,7 +10,7 @@
   <id>https://blog.zjee.me/</id>
   
   <author>
-    <name>jackcharles</name>
+    <name>Jack.Charles</name>
     
   </author>
   
