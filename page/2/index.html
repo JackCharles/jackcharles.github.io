@@ -277,10 +277,12 @@
         <i class="iconfont icon-up"></i>
       </div>
     </div><script>
-		AV.init({
-			appId: 'hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI', 
-			appKey: 'W2WW9ah2D4zfyhW3aYtKw3xD'
-		});
+		try{
+			AV.init({
+				appId: 'hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI', 
+				appKey: 'W2WW9ah2D4zfyhW3aYtKw3xD'
+			});
+		}catch(err){};
 		var query = new AV.Query("Counter");
 		query.find().then(res => {
 			var dataMap = {}
