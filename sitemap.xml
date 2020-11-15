@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.zjee.me/about/index.html</loc>
+    
+    <lastmod>2020-11-15T05:47:31.436Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.zjee.me/2018/11/29/learn-git/</loc>
     
     <lastmod>2020-11-15T05:24:53.665Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>https://blog.zjee.me/2020/06/05/hive-aggr-function/</loc>
     
     <lastmod>2020-06-05T05:43:50.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.zjee.me/about/index.html</loc>
-    
-    <lastmod>2020-05-17T05:28:25.927Z</lastmod>
     
   </url>
   
