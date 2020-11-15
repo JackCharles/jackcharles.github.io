@@ -8,6 +8,7 @@
   Even.prototype.setup = function() {
     var leancloud = this.config.leancloud;
 
+	this.setBackground();
     this.navbar();
     this.responsiveTable();
 
@@ -189,6 +190,18 @@
         clearInterval(loopID);
       }
     }, 500);
+  }
+  
+  Even.prototype.setBackground = function() {
+	  var bg = $("#background-container")
+	  bg.css({
+		width: "100%",
+		height: "100vh",
+		background: "url('https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture')",
+		position: "fixed",
+		top: 0,
+		left: 0
+	  });
   }
 
   var config = window.config;
