@@ -25,38 +25,51 @@
 <script id="baidu_analytics">
     var _hmt = _hmt || [];
     (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?3f20839b943a104368c94974ce5350fa";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
+		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+			console.log("local visit, not report baidu analytics");
+			return;
+		}
+		var hm = document.createElement("script");
+		hm.src = "https://hm.baidu.com/hm.js?3f20839b943a104368c94974ce5350fa";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hm, s);
     })();
   </script><!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-18T0HPMMWC"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-18T0HPMMWC');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	(function googleAna() {
+		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+			console.log("local visit, not report google analytics");
+			return;
+		}
+		gtag('js', new Date());
+		gtag('config', 'G-18T0HPMMWC');
+	})();
 </script><script id="baidu_push">
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https'){
-   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-  }
-  else{
-  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-  }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
+	(function(){
+		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+			console.log("local visit, not report baidu push");
+			return;
+		}
+		
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https'){
+	   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+	  }
+	  else{
+	  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	  }
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
 </script>
 <script>
   window.config = {"toc":true,"fancybox":true,"pjax":true,"latex":true};
 </script>
 
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
     <title>spark · Jack Charles
   </title>
   </head>
@@ -167,18 +180,40 @@
         <i class="iconfont icon-up"></i>
       </div>
     </div><script>
-		var valine = new Valine();
-		valine.init({
-			el:'#comments',
-			appId: 'hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI', 
-			appKey: 'W2WW9ah2D4zfyhW3aYtKw3xD',
-			placeholder: 'say something...',
-			path: 'tags/spark/index.html',
-			avatar: 'monsterid',
-			lang: 'zh-CN',
-			visitor: true,
-			requiredFields: ['nick'],
-		})
+		function loadJs(url, callback){
+			var script = document.createElement('script');
+			script.type = "text/javascript";
+			
+			if(typeof(callback) != "undefined"){
+			 	if(script.readyState){
+			 		script.onreadystatechange=function(){
+			  			if(script.readyState == "loaded" || script.readyState == "complete"){
+				  			script.onreadystatechange=null;
+				  			callback();
+			  			}
+			 		}
+				}
+				else {script.onload = function(){callback();}}
+			}
+			script.src = url;
+			document.body.appendChild(script);
+		}
+		
+		function loadValine() {
+			var valine = new Valine();
+			valine.init({
+				el:'#comments',
+				appId: 'hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI', 
+				appKey: 'W2WW9ah2D4zfyhW3aYtKw3xD',
+				placeholder: 'say something...',
+				avatar: 'monsterid',
+				lang: 'zh-CN',
+				visitor: true,
+				requiredFields: ['nick'],
+			});
+		}
+		
+		loadJs('//unpkg.com/valine/dist/Valine.min.js', loadValine);
     </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>

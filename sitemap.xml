@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.zjee.me/2018/11/29/learn-git/</loc>
+    
+    <lastmod>2020-11-15T05:24:53.665Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.zjee.me/2020/11/02/about-thinking/</loc>
     
     <lastmod>2020-11-01T16:53:26.000Z</lastmod>
@@ -82,13 +89,6 @@
     <loc>https://blog.zjee.me/2019/12/29/hashmap-source-learning/</loc>
     
     <lastmod>2019-12-29T09:31:19.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.zjee.me/2018/11/29/learn-git/</loc>
-    
-    <lastmod>2019-12-28T14:53:56.906Z</lastmod>
     
   </url>
   

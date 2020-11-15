@@ -25,38 +25,51 @@
 <script id="baidu_analytics">
     var _hmt = _hmt || [];
     (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?3f20839b943a104368c94974ce5350fa";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
+		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+			console.log("local visit, not report baidu analytics");
+			return;
+		}
+		var hm = document.createElement("script");
+		hm.src = "https://hm.baidu.com/hm.js?3f20839b943a104368c94974ce5350fa";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hm, s);
     })();
   </script><!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-18T0HPMMWC"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-18T0HPMMWC');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	(function googleAna() {
+		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+			console.log("local visit, not report google analytics");
+			return;
+		}
+		gtag('js', new Date());
+		gtag('config', 'G-18T0HPMMWC');
+	})();
 </script><script id="baidu_push">
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https'){
-   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-  }
-  else{
-  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-  }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
+	(function(){
+		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+			console.log("local visit, not report baidu push");
+			return;
+		}
+		
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https'){
+	   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+	  }
+	  else{
+	  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	  }
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
 </script>
 <script>
   window.config = {"toc":true,"fancybox":true,"pjax":true,"latex":true};
 </script>
 
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
     <title>Tags - Jack Charles</title>
   </head>
 
@@ -126,10 +139,10 @@
         <div class="content-wrapper">
           <div id="content" class="content"><div class="tag-cloud">
     <div class="tag-cloud-title">
-      17 Tags In Total
+      19 Tags In Total
     </div>
     <div class="tag-cloud-tags">
-      <a href="/tags/Java/" style="font-size: 28px;">Java</a> <a href="/tags/大数据/" style="font-size: 22px;">大数据</a> <a href="/tags/杂谈随笔/" style="font-size: 22px;">杂谈随笔</a> <a href="/tags/git/" style="font-size: 16px;">git</a> <a href="/tags/傅里叶级数/" style="font-size: 16px;">傅里叶级数</a> <a href="/tags/hive/" style="font-size: 16px;">hive</a> <a href="/tags/spark/" style="font-size: 16px;">spark</a> <a href="/tags/hadoop/" style="font-size: 16px;">hadoop</a> <a href="/tags/linux-firewall/" style="font-size: 16px;">linux firewall</a> <a href="/tags/thrift/" style="font-size: 16px;">thrift</a> <a href="/tags/rpc/" style="font-size: 16px;">rpc</a> <a href="/tags/多线程/" style="font-size: 16px;">多线程</a> <a href="/tags/Java锁机制/" style="font-size: 16px;">Java锁机制</a> <a href="/tags/MySQL/" style="font-size: 16px;">MySQL</a> <a href="/tags/java-多线程/" style="font-size: 16px;">java 多线程</a> <a href="/tags/Java源码/" style="font-size: 16px;">Java源码</a> <a href="/tags/HashMap/" style="font-size: 16px;">HashMap</a>
+      <a href="/tags/Java/" style="font-size: 28px;">Java</a> <a href="/tags/杂谈随笔/" style="font-size: 22px;">杂谈随笔</a> <a href="/tags/firewall/" style="font-size: 16px;">firewall</a> <a href="/tags/大数据/" style="font-size: 22px;">大数据</a> <a href="/tags/git/" style="font-size: 16px;">git</a> <a href="/tags/傅里叶级数/" style="font-size: 16px;">傅里叶级数</a> <a href="/tags/hive/" style="font-size: 16px;">hive</a> <a href="/tags/spark/" style="font-size: 16px;">spark</a> <a href="/tags/hadoop/" style="font-size: 16px;">hadoop</a> <a href="/tags/linux/" style="font-size: 16px;">linux</a> <a href="/tags/thrift/" style="font-size: 16px;">thrift</a> <a href="/tags/rpc/" style="font-size: 16px;">rpc</a> <a href="/tags/多线程/" style="font-size: 22px;">多线程</a> <a href="/tags/Java锁机制/" style="font-size: 16px;">Java锁机制</a> <a href="/tags/日志/" style="font-size: 16px;">日志</a> <a href="/tags/java/" style="font-size: 16px;">java</a> <a href="/tags/MySQL/" style="font-size: 16px;">MySQL</a> <a href="/tags/Java源码/" style="font-size: 16px;">Java源码</a> <a href="/tags/HashMap/" style="font-size: 16px;">HashMap</a>
     </div>
   </div></div><div class="comments" id="comments">
   </div></div>
@@ -161,18 +174,40 @@
         <i class="iconfont icon-up"></i>
       </div>
     </div><script>
-		var valine = new Valine();
-		valine.init({
-			el:'#comments',
-			appId: 'hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI', 
-			appKey: 'W2WW9ah2D4zfyhW3aYtKw3xD',
-			placeholder: 'say something...',
-			path: 'tags/index.html',
-			avatar: 'monsterid',
-			lang: 'zh-CN',
-			visitor: true,
-			requiredFields: ['nick'],
-		})
+		function loadJs(url, callback){
+			var script = document.createElement('script');
+			script.type = "text/javascript";
+			
+			if(typeof(callback) != "undefined"){
+			 	if(script.readyState){
+			 		script.onreadystatechange=function(){
+			  			if(script.readyState == "loaded" || script.readyState == "complete"){
+				  			script.onreadystatechange=null;
+				  			callback();
+			  			}
+			 		}
+				}
+				else {script.onload = function(){callback();}}
+			}
+			script.src = url;
+			document.body.appendChild(script);
+		}
+		
+		function loadValine() {
+			var valine = new Valine();
+			valine.init({
+				el:'#comments',
+				appId: 'hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI', 
+				appKey: 'W2WW9ah2D4zfyhW3aYtKw3xD',
+				placeholder: 'say something...',
+				avatar: 'monsterid',
+				lang: 'zh-CN',
+				visitor: true,
+				requiredFields: ['nick'],
+			});
+		}
+		
+		loadJs('//unpkg.com/valine/dist/Valine.min.js', loadValine);
     </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>

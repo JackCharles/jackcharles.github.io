@@ -25,37 +25,50 @@
 <script id="baidu_analytics">
     var _hmt = _hmt || [];
     (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?3f20839b943a104368c94974ce5350fa";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
+		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+			console.log("local visit, not report baidu analytics");
+			return;
+		}
+		var hm = document.createElement("script");
+		hm.src = "https://hm.baidu.com/hm.js?3f20839b943a104368c94974ce5350fa";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hm, s);
     })();
   </script><!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-18T0HPMMWC"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-18T0HPMMWC');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	(function googleAna() {
+		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+			console.log("local visit, not report google analytics");
+			return;
+		}
+		gtag('js', new Date());
+		gtag('config', 'G-18T0HPMMWC');
+	})();
 </script><script id="baidu_push">
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https'){
-   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-  }
-  else{
-  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-  }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
+	(function(){
+		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+			console.log("local visit, not report baidu push");
+			return;
+		}
+		
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https'){
+	   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+	  }
+	  else{
+	  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	  }
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
 </script>
 <script>
   window.config = {"toc":true,"fancybox":true,"pjax":true,"latex":true};
 </script>
-
 
     <title>Archives - Jack Charles
   </title>
@@ -139,7 +152,7 @@
           </span>
         <span class="archive-post-title">
           <a href="/2020/11/02/about-thinking/" class="archive-post-link">
-            思考“思考”
+            2020-11-02 随笔
           </a>
         </span>
       </div>

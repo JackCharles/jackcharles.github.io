@@ -25,39 +25,52 @@
 <script id="baidu_analytics">
     var _hmt = _hmt || [];
     (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?3f20839b943a104368c94974ce5350fa";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
+		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+			console.log("local visit, not report baidu analytics");
+			return;
+		}
+		var hm = document.createElement("script");
+		hm.src = "https://hm.baidu.com/hm.js?3f20839b943a104368c94974ce5350fa";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hm, s);
     })();
   </script><!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-18T0HPMMWC"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-18T0HPMMWC');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	(function googleAna() {
+		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+			console.log("local visit, not report google analytics");
+			return;
+		}
+		gtag('js', new Date());
+		gtag('config', 'G-18T0HPMMWC');
+	})();
 </script><script id="baidu_push">
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https'){
-   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-  }
-  else{
-  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-  }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
+	(function(){
+		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+			console.log("local visit, not report baidu push");
+			return;
+		}
+		
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https'){
+	   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+	  }
+	  else{
+	  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	  }
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
 </script>
 <script>
   window.config = {"toc":true,"fancybox":true,"pjax":true,"latex":true};
 </script>
 
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-    <title>思考“思考” - Jack Charles</title>
+    <title>2020-11-02 随笔 - Jack Charles</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -126,7 +139,7 @@
         <div class="content-wrapper">
           <div id="content" class="content"><article class="post">
     <header class="post-header">
-      <h1 class="post-title">思考“思考”
+      <h1 class="post-title">2020-11-02 随笔
         </h1>
 
       <div class="post-meta">
@@ -136,7 +149,7 @@
             <a href="/categories/杂谈随笔/">杂谈随笔</a>
             </span>
         
-			<span id="/2020/11/02/about-thinking/" class="leancloud_visitors" data-flag-title="思考“思考”">
+			<span id="/2020/11/02/about-thinking/" class="leancloud_visitors" data-flag-title="2020-11-02 随笔">
 				<span class="post-meta-item-text"> Visits </span>
 				<span class="leancloud-visitors-count">0</span>
 			</span>
@@ -148,13 +161,13 @@
     <div class="post-toc-content">
       <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、思考源于最原始的生存压力"><span class="toc-text">一、思考源于最原始的生存压力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、思考源于最原始的生物本能"><span class="toc-text">二、思考源于最原始的生物本能</span></a></li></ol>
     </div>
-  </div><div class="post-content"><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这个周末是两天PPT时光，日常的抱怨之余，倒还领略到一些新的东西，就是“思考”。思考这件事打娘胎里就会，但有一个问题，我思考出什么了吗？如果没有，我愿称之为无效思考。坦白说，我一生的思考绝大多数是无效的，这些思考并没有给我的生活带来变化，为什么会这样呢？或许我没有用力思考，又或者说思考深度不够，然而思考本身就是一件耗费体力与精力的事，你知道的，“人之初，性本懒”。精神折磨是最可怕的，没有强大的意念支撑，一般人很难熬过去，这也是古往今来折磨犯人最好的办法，回到思考这件事，也许，我需要一种力量去促使我深入的思考下去。</p>
-<h2 id="一、思考源于最原始的生存压力"><a href="#一、思考源于最原始的生存压力" class="headerlink" title="一、思考源于最原始的生存压力"></a>一、思考源于最原始的生存压力</h2><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 现如今大多数人的思考都来源于生存压力，我也不例外。正如我近两天的处境，为写一个述职PPT而绞尽脑汁，这段时间是痛苦的，但也是能深入思考的绝佳途径之一。PPT作为管理者考核员工工作业绩的工具，其最大的特点在于简练、抽象、以图表意，为了一页还能看的PPT，我经常耗费2-3小时去制作，反复阅读材料，提炼核心观点，甚至在遣词造句上都要下一番功夫，最后还得关注内容的关联性和通达性。PPT的简洁特性需要我对写的每个字、画的每个图都要说得清，道得明。为达到这个目标，我需要斟酌表达是否合理、观点是否明确、范围是否适中、结论是否准确等等，这个过程就是思考，它驱使我由表象去探索本质，由细节反推宏观，分析个例而得出一般结论，这样层层剥丝抽茧地挖掘下去，发现很多微小的事情，其实大有可为。</p>
+  </div><div class="post-content"><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 周末是两天PPT时光，日常的抱怨之余，倒还领略到一些新的东西，就是“思考”。思考的能力与生俱来，但有一个问题，我思考出什么了吗？坦白说，我一生的思考绝大多数是无效的，这些思考并没有给我的生活带来变化，为什么会这样呢？或许我没有用力思考，又或者说思考深度不够，然而思考本身就是一件耗费体力与精力的事，你知道的，“人之初，性本懒”。精神折磨是最可怕的，没有强大的意念支撑，一般人很难熬过去，这也是古往今来折磨犯人最好的办法，回到思考这件事，也许，我需要一种力量去促使我深入的思考下去。</p>
+<h2 id="一、思考源于最原始的生存压力"><a href="#一、思考源于最原始的生存压力" class="headerlink" title="一、思考源于最原始的生存压力"></a>一、思考源于最原始的生存压力</h2><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 现如今大多数人的思考都来源于生存压力，我也不例外。正如我近两天的处境，为写一个述职PPT而绞尽脑汁，这段时间是痛苦的，但也是能深入思考的绝佳途径之一。PPT作为汇报演讲的工具，其最大的特点在于简练、抽象、以图表意，为了一页还能看的PPT，我经常耗费2-3小时去制作，反复阅读材料，提炼核心观点，甚至在遣词造句上都要下一番功夫，最后还得关注内容的关联性和通达性。PPT的简洁特性需要我对写的每个字、画的每个图都要说得清，道得明。为达到这个目标，我需要斟酌表达是否合理、观点是否明确、范围是否适中、结论是否准确等等，这个过程就是思考，它驱使我由表象去探索本质，由细节反推宏观，分析个例而得出一般结论，这样层层剥丝抽茧地挖掘下去，发现很多微小的事情，其实大有可为。</p>
 <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 一页优秀的PPT一眼就能得到认可，反观诸如word文档这样的东西，它的门槛应比PPT高才对，对写作者、阅读者都是如此。一页洋洋洒洒几千字的文章，表面看起来开充实而丰富，但有几个人能快速指出其核心观点与论据，我中学时期一直在培养这样的阅读与写作能力，但我想如果把阅读理解换成PPT，我的语文成绩应该能上一个台阶。PPT都写不好的人去写文档往往更理不清思路、缺乏深度思考，这是因为文档的篇幅和表达的丰富性给我们造成一种假象，使得作者认为我想表达的都表达了，我所有的东西都在文字里，我已经写的很好了。然而往往这些长篇大论是最表象，最没有观点的东西，满篇的文字蒙蔽了我的视野，让我停下了探索本质规律、挖掘内在联系的步伐。或许，这也与教育背景有关，我上学的时候流传这样一种说法，政治考试只要写得多，得分便不会差，这样的思维与刚进入扁平高效的工作环境形成冲撞，往往随之而来的就是被领导批评没思考、没总结，老实说，我再回头看当年的答卷，很多都是一纸废话。</p>
 <p> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;思考，并不需要写多少，说多少，而要在有限的空间和时间范围内，最准确的表达出结论。思考，是需要有动力的，如果你正在写报告，请抓住这样的机会，好好思考一番，这种力量是强烈的、直接的。</p>
 <h2 id="二、思考源于最原始的生物本能"><a href="#二、思考源于最原始的生物本能" class="headerlink" title="二、思考源于最原始的生物本能"></a>二、思考源于最原始的生物本能</h2><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 另一种思考的力量就比较温和了，这种场景下，思考是愉悦的，振奋人心的，它来源于智慧生物的本能。夜深人静的时候，是不是会经常思考人生，有没有觉得突然思路很清晰，连未来都规划好了？这些思考并非都是胡思乱想，大多数都来源与日常生活与工作，有的人称之为灵感，遗憾的是，大多数时候我们都没能将这些头脑风暴记录下来。人在“极端无聊”的时候就会激发大脑去“找乐子”，这种“极端无聊”的场景可能源于衣食无忧的生活，也可能源于跌宕起伏的人生经历，最终无欲无求，又称看破红尘，这种状态的人往往会深入思考自己的过往、社会的变迁，总结得失，升华思想。我们读的很多名著佳句大多产生于这样的场景，比如《红楼梦》、《围城》、《老人与海》等等，然而，现实社会中能依靠这种思考产出结果的人少之又少。</p>
 <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 两种思考的动力都能推动我们深入挖掘事物、人性和社会的本质和内在关联，但也有区别，源于生活压力的思考能让你成为职场精英，行业领军者，这样的结果带有太多的物质属性，往往经不起时间考验，在历史长河中转瞬即逝，但对于大多数人来说，这足够了。另一种源于本能的思考，则更关注于人情社会，反应的是全社会、全人类共有的思维特性，他们的成果往往能引起社会共鸣，能跨越时空，启示后人。</p>
-<p><strong>最后，别瞎想了，容易掉头发！！！</strong></p>
+ <p style="text-align:right; color: #858585;">庚子年九月十七 &#151; 成都</p>
 
       </div>
       <div class="post-copyright">
@@ -211,18 +224,40 @@
         <i class="iconfont icon-up"></i>
       </div>
     </div><script>
-		var valine = new Valine();
-		valine.init({
-			el:'#comments',
-			appId: 'hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI', 
-			appKey: 'W2WW9ah2D4zfyhW3aYtKw3xD',
-			placeholder: 'say something...',
-			path: '2020/11/02/about-thinking/',
-			avatar: 'monsterid',
-			lang: 'zh-CN',
-			visitor: true,
-			requiredFields: ['nick'],
-		})
+		function loadJs(url, callback){
+			var script = document.createElement('script');
+			script.type = "text/javascript";
+			
+			if(typeof(callback) != "undefined"){
+			 	if(script.readyState){
+			 		script.onreadystatechange=function(){
+			  			if(script.readyState == "loaded" || script.readyState == "complete"){
+				  			script.onreadystatechange=null;
+				  			callback();
+			  			}
+			 		}
+				}
+				else {script.onload = function(){callback();}}
+			}
+			script.src = url;
+			document.body.appendChild(script);
+		}
+		
+		function loadValine() {
+			var valine = new Valine();
+			valine.init({
+				el:'#comments',
+				appId: 'hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI', 
+				appKey: 'W2WW9ah2D4zfyhW3aYtKw3xD',
+				placeholder: 'say something...',
+				avatar: 'monsterid',
+				lang: 'zh-CN',
+				visitor: true,
+				requiredFields: ['nick'],
+			});
+		}
+		
+		loadJs('//unpkg.com/valine/dist/Valine.min.js', loadValine);
     </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
