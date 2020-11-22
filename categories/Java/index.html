@@ -14,7 +14,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 <meta name="description" content="记录职业生涯的点点滴滴..."><meta name="baidu-site-verification" content="OX529Jt4QY"><meta name="google-site-verification" content="1aTsp2fFHo02HArMMwntgihTzI3p1masFpGMtv_Du1o"><link rel="alternate" href="/atom.xml" title="Jack Charles"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="https://blog.zjee.me/categories/Java/">
+<link rel="canonical" href="https://blog.zjee.me/categories/java/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css"><script type="text/x-mathjax-config">
     MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
@@ -70,7 +70,7 @@
   window.config = {"toc":true,"fancybox":true,"pjax":true,"latex":true};
 </script>
 
-    <title>Java · Jack Charles
+    <title>java · Jack Charles
   </title>
   </head>
 
@@ -140,55 +140,15 @@
       <main id="main" class="main">
         <div class="content-wrapper">
           <div id="content" class="content"><section id="archive" class="archive"><div class="archive-title category">
-          <h2 class="archive-name">Java</h2>
+          <h2 class="archive-name">java</h2>
         </div>
       <div class="archive-post">
         <span class="archive-post-time">
-          2020-01-05
+          2020-04-19
           </span>
         <span class="archive-post-title">
-          <a href="/2020/01/05/jdk-proxy/" class="archive-post-link">
-            JDK动态代理
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          2020-01-05
-          </span>
-        <span class="archive-post-title">
-          <a href="/2020/01/05/java-log-system/" class="archive-post-link">
-            Java日志体系
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          2019-12-29
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/12/29/hashmap-source-learning/" class="archive-post-link">
-            HashMap源码完全解读
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          2019-11-19
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/11/19/java-primitive-and-wrapper-type/" class="archive-post-link">
-            Java基本类型与包装类型
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          2019-08-24
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/08/24/java-lock-util/" class="archive-post-link">
-            Java中的同步、互斥机制
+          <a href="/2020/04/19/thread-local/" class="archive-post-link">
+            ThreadLocal源码阅读
           </a>
         </span>
       </div>
@@ -226,6 +186,44 @@
 			script.type = "text/javascript";
 			
 			if(typeof(callback) != "undefined"){
+			 	if(script.readyState){
+			 		script.onreadystatechange=function(){
+			  			if(script.readyState == "loaded" || script.readyState == "complete"){
+				  			script.onreadystatechange=null;
+				  			callback();
+			  			}
+			 		}
+				}
+				else {script.onload = function(){callback();}}
+			}
+			script.src = url;
+			document.body.appendChild(script);
+		}
+		
+		function loadValine() {
+			var valine = new Valine();
+			valine.init({
+				el:'#comments',
+				appId: 'hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI', 
+				appKey: 'W2WW9ah2D4zfyhW3aYtKw3xD',
+				placeholder: 'say something...',
+				avatar: 'monsterid',
+				lang: 'zh-CN',
+				visitor: true,
+				requiredFields: ['nick'],
+			});
+		}
+		
+		loadJs('//unpkg.com/valine/dist/Valine.min.js', loadValine);
+    </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>
+"){
 			 	if(script.readyState){
 			 		script.onreadystatechange=function(){
 			  			if(script.readyState == "loaded" || script.readyState == "complete"){
