@@ -1,167 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="文字编码是一个巨大的工程，功在当代，利在千秋。Unicode促成全人类文字信息化，它因计算机技术而诞生，让全世界享受计算机带来的遍历。同时，计算机文字编码也有着沉重的历史包袱，很多时候令技术人员头疼，现在，就跟我一起去探索文字信息化的历史，了解字符集与字符编码的故事。"><meta name="keywords" content="字符集,字符编码,unicode"><meta name="author" content="Jack.Charles"><meta name="copyright" content="Jack.Charles"><title>字符集与字符编码的故事 | 江影不沉浮</title><link rel="shortcut icon" href="/about/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?3f20839b943a104368c94974ce5350fa";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><link rel="dns-prefetch" href="https://www.google-analytics.com"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-<meta name="theme-color" content="#f8f5ec">
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-<meta name="description" content="文字编码是一个巨大的工程，功在当代，利在千秋。Unicode促成全人类文字信息化，它因计算机技术而诞生，让全世界享受计算机带来的遍历。同时，计算机文字编码也有着沉重的历史包袱，很多时候令技术人员头疼，现在，就跟我一起去探索文字信息化的历史，了解字符集与字符编码的故事。"><meta name="keywords" content="字符集, 字符编码, unicode, Jack Charles"><meta name="baidu-site-verification" content="OX529Jt4QY"><meta name="google-site-verification" content="1aTsp2fFHo02HArMMwntgihTzI3p1masFpGMtv_Du1o"><link rel="alternate" href="/atom.xml" title="Jack Charles"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="https://blog.zjee.me/2020/11/22/charset-and-encode/">
-
-<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css"><script type="text/x-mathjax-config">
-    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
-  </script>
-  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
-
-<script id="baidu_analytics">
-    var _hmt = _hmt || [];
-    (function() {
-		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-			console.log("local visit, not report baidu analytics");
-			return;
-		}
-		var hm = document.createElement("script");
-		hm.src = "https://hm.baidu.com/hm.js?3f20839b943a104368c94974ce5350fa";
-		var s = document.getElementsByTagName("script")[0];
-		s.parentNode.insertBefore(hm, s);
-    })();
-  </script><!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-18T0HPMMWC"></script>
-<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	(function googleAna() {
-		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-			console.log("local visit, not report google analytics");
-			return;
-		}
-		gtag('js', new Date());
-		gtag('config', 'G-18T0HPMMWC');
-	})();
-</script><script id="baidu_push">
-	(function(){
-		if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-			console.log("local visit, not report baidu push");
-			return;
-		}
-		
-		var bp = document.createElement('script');
-		var curProtocol = window.location.protocol.split(':')[0];
-		if (curProtocol === 'https'){
-	   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-	  }
-	  else{
-	  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-	  }
-		var s = document.getElementsByTagName("script")[0];
-		s.parentNode.insertBefore(bp, s);
-	})();
-</script>
-<script>
-  window.config = {"toc":true,"fancybox":true,"pjax":true,"latex":true};
-</script>
-
-    <title>字符集与字符编码的故事 - Jack Charles</title>
-  </head>
-
-  <body><div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/." class="logo">Jack Charles</a>
-  </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list"><a href="/">
-        <li class="mobile-menu-item">Home
-          </li>
-      </a><a href="/archives/">
-        <li class="mobile-menu-item">Archives
-          </li>
-      </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags
-          </li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories
-          </li>
-      </a><a href="/about/">
-        <li class="mobile-menu-item">About
-          </li>
-      </a></ul>
-</nav>
-<div class="container" id="mobile-panel">
-      <header id="header" class="header"><div class="logo-wrapper">
-  <a href="/." class="logo">Jack Charles</a>
-</div>
-
-<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
-          <a class="menu-item-link" href="/">
-            Home
-            </a>
-        </li>
-      <li class="menu-item">
-          <a class="menu-item-link" href="/archives/">
-            Archives
-            </a>
-        </li>
-      <li class="menu-item">
-          <a class="menu-item-link" href="/tags/">
-            Tags
-            </a>
-        </li>
-      <li class="menu-item">
-          <a class="menu-item-link" href="/categories/">
-            Categories
-            </a>
-        </li>
-      <li class="menu-item">
-          <a class="menu-item-link" href="/about/">
-            About
-            </a>
-        </li>
-      </ul></nav>
-</header>
-
-      <main id="main" class="main">
-        <div class="content-wrapper">
-          <div id="content" class="content"><article class="post">
-    <header class="post-header">
-      <h1 class="post-title">字符集与字符编码的故事
-        </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2020-11-22
-        </span><span class="post-category">
-            <a href="/categories/计算机技术/">计算机技术</a>
-            </span>
-        
-			<span id="/2020/11/22/charset-and-encode/" class="leancloud_visitors" data-flag-title="字符集与字符编码的故事">
-				<span class="post-meta-item-text"> Visits </span>
-				<span class="leancloud-visitors-count">0</span>
-			</span>
-		</div>
-    </header>
-
-    <div class="post-toc" id="post-toc">
-    <h2 class="post-toc-title">Contents</h2>
-    <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、问题引出"><span class="toc-text">一、问题引出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、计算机是如何处理文字的？"><span class="toc-text">1、计算机是如何处理文字的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、中文是怎么被支持的？"><span class="toc-text">2、中文是怎么被支持的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、为什么会有“乱码”出现？"><span class="toc-text">3、为什么会有“乱码”出现？</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#二、字符编码"><span class="toc-text">二、字符编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、UTF-8"><span class="toc-text">1、UTF-8</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、UTF-16、UTF-32"><span class="toc-text">2、UTF-16、UTF-32</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、ANSI"><span class="toc-text">3、ANSI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、BOM"><span class="toc-text">4、BOM</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、Java中的字符编码"><span class="toc-text">三、Java中的字符编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、源文件、编译器、JVM编码"><span class="toc-text">1、源文件、编译器、JVM编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、字符、字符串编码"><span class="toc-text">2、字符、字符串编码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、Web中的字符编码"><span class="toc-text">四、Web中的字符编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、发送和接收端编码不一致"><span class="toc-text">1、发送和接收端编码不一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、缺失字体"><span class="toc-text">2、缺失字体</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、总结"><span class="toc-text">五、总结</span></a></li>
-    </div>
-  </div><div class="post-content"><h1 id="一、问题引出"><a href="#一、问题引出" class="headerlink" title="一、问题引出"></a>一、问题引出</h1><h3 id="1、计算机是如何处理文字的？"><a href="#1、计算机是如何处理文字的？" class="headerlink" title="1、计算机是如何处理文字的？"></a>1、计算机是如何处理文字的？</h3><p>在计算机内部，所有数据都是以二进制形式存储的，就像这样:</p>
+ga('create', 'G-18T0HPMMWC', 'auto');
+ga('send', 'pageview');</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.2.0'
+} </script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="江影不沉浮" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%97%AE%E9%A2%98%E5%BC%95%E5%87%BA"><span class="toc-text">一、问题引出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%98%AF%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E6%96%87%E5%AD%97%E7%9A%84%EF%BC%9F"><span class="toc-text">1、计算机是如何处理文字的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E4%B8%AD%E6%96%87%E6%98%AF%E6%80%8E%E4%B9%88%E8%A2%AB%E6%94%AF%E6%8C%81%E7%9A%84%EF%BC%9F"><span class="toc-text">2、中文是怎么被支持的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%9C%89%E2%80%9C%E4%B9%B1%E7%A0%81%E2%80%9D%E5%87%BA%E7%8E%B0%EF%BC%9F"><span class="toc-text">3、为什么会有“乱码”出现？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="toc-text">二、字符编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81UTF-8"><span class="toc-text">1、UTF-8</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81UTF-16%E3%80%81UTF-32"><span class="toc-text">2、UTF-16、UTF-32</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81ANSI"><span class="toc-text">3、ANSI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81BOM"><span class="toc-text">4、BOM</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81Java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="toc-text">三、Java中的字符编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E6%BA%90%E6%96%87%E4%BB%B6%E3%80%81%E7%BC%96%E8%AF%91%E5%99%A8%E3%80%81JVM%E7%BC%96%E7%A0%81"><span class="toc-text">1、源文件、编译器、JVM编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%AD%97%E7%AC%A6%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%BC%96%E7%A0%81"><span class="toc-text">2、字符、字符串编码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Web%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="toc-text">四、Web中的字符编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%8F%91%E9%80%81%E5%92%8C%E6%8E%A5%E6%94%B6%E7%AB%AF%E7%BC%96%E7%A0%81%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-text">1、发送和接收端编码不一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E7%BC%BA%E5%A4%B1%E5%AD%97%E4%BD%93"><span class="toc-text">2、缺失字体</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-text">五、总结</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/about/avatar.jpg"></div><div class="author-info__name text-center">Jack.Charles</div><div class="author-info__description text-center">记录职业生涯的点点滴滴...</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/JackCharles">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">16</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">22</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">9</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://blog.mrabit.com/bing/today)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">江影不沉浮</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">字符集与字符编码的故事</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-11-22</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%8A%80%E6%9C%AF/">计算机技术</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">4.4k</span><span class="post-meta__separator">|</span><span>阅读时长: 15 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="一、问题引出"><a href="#一、问题引出" class="headerlink" title="一、问题引出"></a>一、问题引出</h1><h3 id="1、计算机是如何处理文字的？"><a href="#1、计算机是如何处理文字的？" class="headerlink" title="1、计算机是如何处理文字的？"></a>1、计算机是如何处理文字的？</h3><p>在计算机内部，所有数据都是以二进制形式存储的，就像这样:</p>
 <p><img src="001.jpg" alt="二进制"></p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;很炫酷有没有？什么，你看不懂？It’s okay！我也看不懂，计算机能看懂就行。我们的文字也是这样按二进制被存储或处理的，因此需要一种机制将文字映射到二进制串上面，聪明的计算机先驱们发明了<strong>字符集</strong>这样的东西，他们将常见的字符编码到一张表中，每个字符对应一个唯一的数字，称为<strong>码位/码点/Code Point</strong>，就像这样。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码位仍然不是计算机可以直接存储的东西，还需要一种规范将其转变为二进制，并且要能还原回去，所以最直接的办法就是固定每个码位的宽度，不足的用0填充，这就是<strong>字符编码</strong>最简单的一种实现方式。</p>
@@ -170,11 +30,11 @@
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;再后来计算机进入了第三世界国家，例如中国，但ASCII已经没有位置支持其他文字了，于是我们便大刀阔斧建立自己的标准化字符集。我国的字符集有三个阶段，第一阶段是将127号以前的字符保留，127号之后的全部删除，两个连续127号之后的字符在一起表示一个中文字符，第一个字符范围0xA1~0xF7（高字节），后面一个字符范围为0xA1~0xFE（低字节），这样一共表示了7000多个简体汉字，其中还包括数学符号、希腊字母、日文假名和ASCII已经定义的字符。这就是第一代汉字编码<strong>GB2312</strong>。GB2312中，127号以前的字符（ASCII字符）称为<strong>半角</strong>字符，而扩充的中文和重定义的字母、标点符号称为<strong>全角</strong>字符（占2字节），这就是我们在输入法上看到的“太阳（全角）”和“月亮（半角）”的含义，全角和半角仅有前127个字符有差异，一般都使用<strong>半角输入</strong>，让英文和英文标点与ASCII一致。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第二阶段不再要求第二个字节（低字节）从127之后开始，只要第一个字节（高字节）大于127就表示一个汉字的开始，这样又扩展出近20000个新汉字和符号，这个字符集称为<strong>GBK</strong>编码。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国是个多民族国家，很多少数民族有自己的语言体系，此后又在GBK编码基础上增加了少数民族文字，这就是第三阶段的中文字符集，称为<strong>GB18030</strong>。此后中文字符信息化编码基本就完善了，GB2312、GBK、GB18030都是固定2字节表示一个字符，举国程序员欢呼雀跃，奔走相告。</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在我们完善中文信息化的同时，其他地区/国家也在建立自己的文字编码，比如日文的Shift_JIS、EUC-JP，台湾的BIG-5等等。此时很多国际化软件正在经历一场水深火热的本土化适配工作，最终有两个组织伸出援手，拯救程序员于水火之中，它们就是国际标准化组织（ISO）和Xerox、Apple组成的统一码联盟，他们废弃了全球所有区域性编码方案，重新研究了一套包含世界上所有文字和所有符号的字符集，ISO推出的是UCS（Universal Character Set），统一码联盟推出的是Unicode（Universal Multiple-Octet Coded Character Set，万国码），但世界上并不需要两套不同字符集，于是两者相互融合，但都有独立项目，发布独立标准，现阶段两者大体一致，以Unicode为主，USC标准可以忽略。ASCII中前127个字符在Unicode中编码保持不变，其余文字符号全部重新编码，这也导致GBK之类的编码与Unicode不兼容，需要查表转换。</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unicode仅仅是一个规范（取值范围是0x00 ~ 0x10FFFF），它仅仅完成文字到码位的统一，具体这些码位如何序列化存储、传输是另外需要考虑的事情。针对这个问题，聪明的工程师搞出了UTF-8/UTF-16/UTF-32等落地方案，他们被称为<strong>字符编码</strong>，可以认为<span style="color:red"><strong>字符编码是字符集规范的不同实现方式</strong> </span>。同样的，GBK是字符集，其编码方案位EUC-CN，一般提及GBK、GB2132之类的都默认包含了其编码方案，因为只有一种方案与之关联。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在我们完善中文信息化的同时，其他地区/国家也在建立自己的文字编码，比如日文的Shift_JIS、EUC-JP，台湾的BIG-5等等。此时很多国际化软件正在经历一场水深火热的本土化适配工作，最终有两个组织伸出援手，拯救程序员于水火之中，他们就是国际标准化组织（ISO）和Xerox、Apple组成的统一码联盟，他们废弃了全球所有区域性编码方案，重新研究了一套包含世界上所有文字和所有符号的字符集，ISO推出的是UCS（Universal Character Set），统一码联盟推出的是Unicode（Universal Multiple-Octet Coded Character Set，万国码），但世界上并不需要两套不同字符集，于是两者相互融合，但都有独立项目，发布独立标准，现阶段两者大体一致，以Unicode为主，USC标准可以忽略。ASCII中前127个字符在Unicode中编码保持不变，其余文字符号全部重新编码，这也导致GBK之类的编码与Unicode不兼容，需要查表转换。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unicode仅仅是一个规范（取值范围是0x00 ~ 0x10FFFF），它仅仅完成文字到码位的统一，具体这些码位如何序列化存储、传输是另外需要考虑的事情。针对这个问题，聪明的工程师搞出了UTF-8/UTF-16/UTF-32等落地方案，他们被称为<strong>字符编码</strong>，可以认为<span style="color:red"><strong>字符编码是字符集规范的不同实现方式</strong> </span>。同样的，GBK是字符集，其编码方案位EUC-CN，一般提及GBK、GB2132之类的都默认包含了其编码方案，因为只有一种方案与之关联。</p>
 <h3 id="3、为什么会有“乱码”出现？"><a href="#3、为什么会有“乱码”出现？" class="headerlink" title="3、为什么会有“乱码”出现？"></a>3、为什么会有“乱码”出现？</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;乱码是让所有人都头疼的事，因为这个问题太常见了，而且没有固定解法，需要具体问题具体分析，就算是绝大部分专业程序员，都是靠一遍遍尝试去解决问题。关于一段文本的存储、读取和展示流程示意图如下：</p>
 <p><img src="002.png" alt="文字编解码"></p>
-<ul>
+<ol>
 <li>编码方式与解码方式不一致：这种情况占99%，具体又细分为几类：<ul>
 <li>文件保存编码与编辑器读取编码不一致，最常见Windows GBK编码，Linux/MacOS UTF-8读取乱码。</li>
 <li>进程之间通信，发送方与接收方编码不一致，比如python按UTF-8打印文本，Windows CMD按GBK接收文本。</li>
@@ -183,7 +43,7 @@
 </li>
 <li>部分软件、系统不支持发送方使用的编码方式。</li>
 <li>系统当前使用的字体支持字符有限，特殊字符在当前字体下找不到<strong>图像字符</strong>（glyph）,且没有备用字体，或者备用字体也不支持，则转而使用0号图像字符，就是一个白框，Windows CMD、网页中最容易出现。</li>
-</ul>
+</ol>
 <h1 id="二、字符编码"><a href="#二、字符编码" class="headerlink" title="二、字符编码"></a>二、字符编码</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上文中说到Unicode是一种字符集，再次强调它只是一种<strong>规范</strong>，不是具体实现，各种文本编辑的编码中也找不到Unicode选项，它的实现常见有以下几种：UTF-8、UTF-16、UTF-32。</p>
 <h3 id="1、UTF-8"><a href="#1、UTF-8" class="headerlink" title="1、UTF-8"></a>1、UTF-8</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UTF8是现阶段最流行的编码方式，其核心在于对于不同的字符采用不同的编码长度，在支持Unicode标准的前提下又大大节省存储空间和网络流量。UTF-8编码规则如下：</p>
 <table>
@@ -242,7 +102,7 @@
 </tbody></table>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里需要提一个<strong>代码单元</strong>的概念，代码单元（Code Unit）是具体编码形式中的存在的最小单位，一个Code Point 可能由一个或多个 Code Unit(s) 表示。如果代码单元多于1字节，在处理时就需要考虑大小端问题（与int数据传输考虑的大小端问题一致），而UTF-8代码单元为1字节，也就是可以看成流式传输，无需考虑大小端问题。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如，一个“奎”的Unicode编码是<code>594E</code>，“乙”的Unicode编码是<code>4E59</code>。如果我们收到UTF-16字节流<code>594E</code>，那么这是“奎”还是“乙”？如果BOM是大端序，那么代码点就应该是<code>594E</code>，就是“奎”，如果BOM是小端序，那么代码点就应该是<code>4E59</code>，就是“乙”。</p>
-<h3 id="2、UTF-16、UTF-32"><a href="#2、UTF-16、UTF-32" class="headerlink" title="2、UTF-16、UTF-32"></a>2、UTF-16、UTF-32</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UTF-16在基本多语言平面（BMP）内，统一使用2字节表示一个字符（U+0000 ~ U+FFFF）,在U+10000 ~ U+10FFFF之间则使用两个16位的代码单元表示，称为<strong>代理对(surrogate pair)</strong>。正如上文中提到的，UTF-16需要明确指定使用大端（big endian）或小端（little endian）存储。另外UTF-16在BMP内是固定的2字节，这也是Java char的实现标准，对于增补字符，则是2个16位的代码单元，这也意味着UTF-16整体是变长编码。</p>
+<h3 id="2、UTF-16、UTF-32"><a href="#2、UTF-16、UTF-32" class="headerlink" title="2、UTF-16、UTF-32"></a>2、UTF-16、UTF-32</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UTF-16在基本多语言平面（BMP）内，统一使用2字节表示一个字符（U+0000 ~ U+FFFF）,在U+10000 ~ U+10FFFF之间则使用两个16位的代码单元表示，称为**代理对(surrogate pair)**。正如上文中提到的，UTF-16需要明确指定使用大端（big endian）或小端（little endian）存储。另外UTF-16在BMP内是固定的2字节，这也是Java char的实现标准，对于增补字符，则是2个16位的代码单元，这也意味着UTF-16整体是变长编码。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UTF-32是最简单的一种编码，它采用32位定长编码，每一个代码单元4字节，其值与Unicode码点完全一致。</p>
 <h3 id="3、ANSI"><a href="#3、ANSI" class="headerlink" title="3、ANSI"></a>3、ANSI</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在Windows操作系统上，我们还看到有ANSI这种编码存在，ANSI不是一种具体的编码，是Windows自己的称呼，它实际上就是根据locale选定的编码，比如在中国就是GBK、美国就是ASCII，最好不要用这个东西。</p>
 <h3 id="4、BOM"><a href="#4、BOM" class="headerlink" title="4、BOM"></a>4、BOM</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOM也是Windows独有的“作品”，BOM（Byte Order Mark，字节顺序标记，一般位EF BB BF三个字节），是用来确定文件是按大端还是小端编码的，主要在UTF-16这样的编码中会使用，而UTF-8是字节流编码，无需大小端概念，BOM也没有什么用。旧版Windows 记事本编辑过的文本很可能带有BOM，最新Windows10（2004）记事本默认UTF-8已经不带BOM，另外Windows默认Unicode实际是带BOM的小端UTF-16。</p>
@@ -304,123 +164,70 @@
 </tbody></table>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注意：这里要区分上文中说的编码乱码，还是缺失字体，一般Linux Shell和Windows CMD默认都不支持特殊字符、表情等符号。</p>
 <h3 id="2、字符、字符串编码"><a href="#2、字符、字符串编码" class="headerlink" title="2、字符、字符串编码"></a>2、字符、字符串编码</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java中char数据类型固定占2个字节（一个代码单元），采用UTF-16编码，只能支持BMP内的字符。如果强行给char赋值BMP以外的字符就会编译失败，如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch = <span class="string">'𠀃'</span>; <span class="comment">//𠀃:\ud800\Udc84</span></span><br><span class="line"><span class="comment">// java: 未结束的字符文字</span></span><br><span class="line"><span class="comment">// java: 非法字符: '\udc84'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch = <span class="string">&#x27;𠀃&#x27;</span>; <span class="comment">//𠀃:\ud800\Udc84</span></span><br><span class="line"><span class="comment">// java: 未结束的字符文字</span></span><br><span class="line"><span class="comment">// java: 非法字符: &#x27;\udc84&#x27;</span></span><br></pre></td></tr></table></figure>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述文字可以在字符串中存在，占用两个char空间，如<code>String str = &quot;𠀃&quot;;</code>是合法的，但需要注意<code>String.length();</code>返回的是char个数，也就是代码单元数，该示例中<code>str.length()</code>返回2。所以在依赖字符串<strong>字符个数</strong>做操作的时候，请使用<strong><code>str.codePointCount(0, str.length());</code></strong>，一个Code Point是一个字符。如果要获取字符串所占内存空间可以用<code>str.length() * 2;</code>，另外，90%的Java教程告诉你<code>str.length();</code>是获取字符串长度的方法，这是不负责任的说法。</p>
-<h1 id="四、Web中的字符编码"><a href="#四、Web中的字符编码" class="headerlink" title="四、Web中的字符编码"></a>四、Web中的字符编码</h1><h3 id="1、发送和接收端编码不一致"><a href="#1、发送和接收端编码不一致" class="headerlink" title="1、发送和接收端编码不一致"></a>1、发送和接收端编码不一致</h3><ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述文字可以在字符串中存在，占用两个char空间，如<code>String str = &quot;𠀃&quot;;</code>是合法的，但需要注意<code>String.length();</code>返回的是char个数，也就是代码单元数，该示例中<code>str.length()</code>返回2。所以在依赖字符串<strong>字符个数</strong>做操作的时候，请使用**<code>str.codePointCount(0, str.length());</code>**，一个Code Point是一个字符。如果要获取字符串所占内存空间可以用<code>str.length() * 2;</code>，另外，90%的Java教程告诉你<code>str.length();</code>是获取字符串长度的方法，这是不负责任的说法。</p>
+<h1 id="四、Web中的字符编码"><a href="#四、Web中的字符编码" class="headerlink" title="四、Web中的字符编码"></a>四、Web中的字符编码</h1><h3 id="1、发送和接收端编码不一致"><a href="#1、发送和接收端编码不一致" class="headerlink" title="1、发送和接收端编码不一致"></a>1、发送和接收端编码不一致</h3><ol>
 <li>HTML静态页面：服务端HTML文件编码与设置的<code>&lt;meta charset=&quot;GBK&quot;/&gt;</code>或Response Header中Content-Type不一致，meta标签与Content-Type起相同作用，告诉浏览器以什么样的编码解码文档，meta标签是为了解决某些服务器无法设置Content-Type而产生的，两者同时存在时meta优先级更高。</li>
 <li>动态生成HTML片段：某些Web Server可以动态生成HTML片段，其同样需要指定编码，比如常见的Java Servlet可以通过<code>response.setCharacterEncoding(&quot;UTF-8&quot;)</code>设置返回片段的编码，该方法不仅规定了服务端该如何编码，同时也告诉浏览器该如何解码。相对地，仅设置meta编码在部分情况下无效，这是因为没有指定服务端编码方式，服务端默认编码方式很可能与meta不一致。 一般编码都在Filter中设置，避免到处散落。</li>
-<li>参数：客户端上传的参数同样需要编码：<ol>
+<li>参数：客户端上传的参数同样需要编码：<ul>
 <li>POST：POST请求可以在Request Header中设置Content-Type，服务端则可以先设置编码方式<code>request.setCharacterEncoding(&quot;UTF-8&quot;)</code>，然后再获取参数。</li>
 <li>GET：注意，GET请求的参数再URL中，不在Body中，<code>setCharacterEncoding</code>对此无效。针对这个问题解决方案比较杂，大体可分为两类：一类是对URL参数进行二次Encode，服务端Decode一次（服务器会自动Decode一次），但该方法对于一些特殊符号有副作用。另一种是通过修改服务其URL Encoding，比如Tomcat可设置<code>URIEncoding=&quot;UTF-8&quot;</code>支持中文。</li>
-</ol>
-</li>
 </ul>
+</li>
+</ol>
 <h3 id="2、缺失字体"><a href="#2、缺失字体" class="headerlink" title="2、缺失字体"></a>2、缺失字体</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;字体缺失导致的页面乱码一般不太常见，但也是一个值得关注的问题。一般页面的特殊符号离不开特殊字体的支持，但如果在设置CSS时未使用在线字体便会导致客户端乱码。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">font-face</span> &#123; </span><br><span class="line">	<span class="attribute">font-family</span>: diyfont; </span><br><span class="line">	<span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">"/fonts/diyfont.ttf"</span>); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.header</span> &#123;</span><br><span class="line">    <span class="attribute">font-family</span>: diyfont;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@font-face</span> &#123; </span><br><span class="line">	<span class="attribute">font-family</span>: diyfont; </span><br><span class="line">	<span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">&quot;/fonts/diyfont.ttf&quot;</span>); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.header</span> &#123;</span><br><span class="line">    <span class="attribute">font-family</span>: diyfont;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;另一种更为高效安全的办法是用图片代替特殊符号，普通图片可能在分辨率适应上略差，可以使用svg代替。</p>
 <h1 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文字编码是一个复杂而巨大的工程，可以说功在当代，利在千秋。Unicode是一个促成全人类文字信息化的工具，它因计算机技术而诞生，并让全世界的人享受计算机带来的遍历。从一个更高的视角看，Unicode是一个标准，它不止服务于计算机，设想以下场景，如果有一天通讯瘫痪，你和你的阿拉伯朋友仅能依靠信件联系，也许你们的往来方式是这样的：</p>
 <p><img src="004.png" alt="Best wishes"></p>
 <p>Best wishes！</p>
-
-      </div>
-      <div class="post-copyright">
-    <p class="copyright-item">
-      <span>Author: </span>
-      <a href="https://blog.zjee.me">Jack.Charles</a>
-    </p>
-    <p class="copyright-item">
-      <span>Link: </span>
-      <a href="https://blog.zjee.me/2020/11/22/charset-and-encode/">https://blog.zjee.me/2020/11/22/charset-and-encode/</a>
-    </p>
-    <p class="copyright-item">
-      <span>License: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
-    </p>
-  </div>
-      <footer class="post-footer">
-        <div class="post-tags">
-            <a href="/tags/字符集/">字符集</a>
-            <a href="/tags/字符编码/">字符编码</a>
-            <a href="/tags/unicode/">unicode</a>
-            </div>
-        
-        <nav class="post-nav"><a class="next" href="/2020/11/02/about-thinking/">
-        <span class="next-text nav-default">2020-11-02 随笔</span>
-        <span class="prev-text nav-mobile">Next</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-    </nav></footer>
-    </article></div><div class="comments" id="comments">
-  </div></div>
-      </main>
-
-      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:zjee@live.cn" class="iconfont icon-email" title="email"></a>
-        <a href="/pass" class="iconfont icon-facebook" title="facebook"></a>
-        <a href="/pass" class="iconfont icon-weibo" title="weibo"></a>
-        <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
-    </div><div class="copyright">
-  <span class="power-by">
-    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
-  </span>
-  <span class="division">|</span>
-  <span class="theme-info">
-    Theme - 
-    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
-  </span>
-
-  <span class="copyright-year">&copy;2018 - 2020<span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Jack.Charles</span>
-  </span>
-</div>
-</footer>
-
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </div>
-    </div><script>
-		function loadJs(url, callback){
-			var script = document.createElement('script');
-			script.type = "text/javascript";
-			
-			if(typeof(callback) != "undefined"){
-			 	if(script.readyState){
-			 		script.onreadystatechange=function(){
-			  			if(script.readyState == "loaded" || script.readyState == "complete"){
-				  			script.onreadystatechange=null;
-				  			callback();
-			  			}
-			 		}
-				}
-				else {script.onload = function(){callback();}}
-			}
-			script.src = url;
-			document.body.appendChild(script);
-		}
-		
-		function loadValine() {
-			var valine = new Valine();
-			valine.init({
-				el:'#comments',
-				appId: 'hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI', 
-				appKey: 'W2WW9ah2D4zfyhW3aYtKw3xD',
-				placeholder: 'say something...',
-				avatar: 'monsterid',
-				lang: 'zh-CN',
-				visitor: true,
-				requiredFields: ['nick'],
-			});
-		}
-		
-		loadJs('//unpkg.com/valine/dist/Valine.min.js', loadValine);
-    </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
-  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
-  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
-  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
-  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
-<script type="text/javascript" color="52, 73, 94" opacity="0.8" zindex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
-  </body>
-</html>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jack.Charles</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://blog.zjee.me/2020/11/22/charset-and-encode/">https://blog.zjee.me/2020/11/22/charset-and-encode/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.zjee.me">江影不沉浮</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%97%E7%AC%A6%E9%9B%86/">字符集</a><a class="post-meta__tags" href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/">字符编码</a><a class="post-meta__tags" href="/tags/unicode/">unicode</a></div><div class="addthis_inline_share_toolbox pull-right"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5fd492e34337347a" async></script><nav id="pagination"><div class="next-post pull-right"><a href="/2020/11/02/about-thinking/"><span>2020-11-02 随笔</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI',
+  appKey:'W2WW9ah2D4zfyhW3aYtKw3xD',
+  placeholder:'say something...',
+  avatar:'monsterid',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(https://blog.mrabit.com/bing/today)"><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2020 By Jack.Charles</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

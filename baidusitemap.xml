@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://blog.zjee.me/2020/11/22/charset-and-encode/</loc>
-    <lastmod>2020-11-22</lastmod>
+    <loc>https://blog.zjee.me/2018/11/29/learn-git/</loc>
+    <lastmod>2020-12-12</lastmod>
   </url>
   <url>
-    <loc>https://blog.zjee.me/2018/11/29/learn-git/</loc>
-    <lastmod>2020-11-15</lastmod>
+    <loc>https://blog.zjee.me/2018/11/29/thrift-grama/</loc>
+    <lastmod>2020-12-12</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.zjee.me/2020/11/22/charset-and-encode/</loc>
+    <lastmod>2020-11-22</lastmod>
   </url>
   <url>
     <loc>https://blog.zjee.me/2020/11/02/about-thinking/</loc>
@@ -15,10 +19,6 @@
   <url>
     <loc>https://blog.zjee.me/2020/06/05/hive-aggr-function/</loc>
     <lastmod>2020-06-05</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.zjee.me/2018/11/29/thrift-grama/</loc>
-    <lastmod>2020-05-17</lastmod>
   </url>
   <url>
     <loc>https://blog.zjee.me/2020/05/16/informal-essay-01/</loc>
