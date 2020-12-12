@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.zjee.me/about/index.html</loc>
+    
+    <lastmod>2020-12-12</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.zjee.me/2018/11/29/learn-git/</loc>
     
     <lastmod>2020-12-12</lastmod>
@@ -10,13 +17,6 @@
   
   <url>
     <loc>https://blog.zjee.me/2018/11/29/thrift-grama/</loc>
-    
-    <lastmod>2020-12-12</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.zjee.me/about/index.html</loc>
     
     <lastmod>2020-12-12</lastmod>
     
@@ -151,13 +151,6 @@
 
   
   <url>
-    <loc>https://blog.zjee.me/tags/%E6%9D%82%E8%B0%88%E9%9A%8F%E7%AC%94/</loc>
-    <lastmod>2020-12-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.zjee.me/tags/linux/</loc>
     <lastmod>2020-12-12</lastmod>
     <changefreq>daily</changefreq>
@@ -166,6 +159,13 @@
   
   <url>
     <loc>https://blog.zjee.me/tags/firewall/</loc>
+    <lastmod>2020-12-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zjee.me/tags/%E6%9D%82%E8%B0%88%E9%9A%8F%E7%AC%94/</loc>
     <lastmod>2020-12-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -307,14 +307,14 @@
 
   
   <url>
-    <loc>https://blog.zjee.me/categories/%E6%9D%82%E8%B0%88%E9%9A%8F%E7%AC%94/</loc>
+    <loc>https://blog.zjee.me/categories/linux/</loc>
     <lastmod>2020-12-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://blog.zjee.me/categories/linux/</loc>
+    <loc>https://blog.zjee.me/categories/%E6%9D%82%E8%B0%88%E9%9A%8F%E7%AC%94/</loc>
     <lastmod>2020-12-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
