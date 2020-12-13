@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.zjee.me/2020/12/13/arraylist-learing/</loc>
+    
+    <lastmod>2020-12-13</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.zjee.me/about/index.html</loc>
     
-    <lastmod>2020-12-12</lastmod>
+    <lastmod>2020-12-13</lastmod>
     
   </url>
   
@@ -151,13 +158,6 @@
 
   
   <url>
-    <loc>https://blog.zjee.me/tags/%E6%9D%82%E8%B0%88%E9%9A%8F%E7%AC%94/</loc>
-    <lastmod>2020-12-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.zjee.me/tags/linux/</loc>
     <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
@@ -166,6 +166,20 @@
   
   <url>
     <loc>https://blog.zjee.me/tags/firewall/</loc>
+    <lastmod>2020-12-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zjee.me/tags/%E6%9D%82%E8%B0%88%E9%9A%8F%E7%AC%94/</loc>
+    <lastmod>2020-12-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zjee.me/tags/%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0/</loc>
     <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -194,13 +208,6 @@
   
   <url>
     <loc>https://blog.zjee.me/tags/hadoop/</loc>
-    <lastmod>2020-12-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zjee.me/tags/%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0/</loc>
     <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -293,13 +300,6 @@
 
   
   <url>
-    <loc>https://blog.zjee.me/categories/%E6%9D%82%E8%B0%88%E9%9A%8F%E7%AC%94/</loc>
-    <lastmod>2020-12-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.zjee.me/categories/linux/</loc>
     <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
@@ -307,7 +307,7 @@
   </url>
   
   <url>
-    <loc>https://blog.zjee.me/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</loc>
+    <loc>https://blog.zjee.me/categories/%E6%9D%82%E8%B0%88%E9%9A%8F%E7%AC%94/</loc>
     <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -315,6 +315,13 @@
   
   <url>
     <loc>https://blog.zjee.me/categories/%E5%85%B6%E4%BB%96/</loc>
+    <lastmod>2020-12-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zjee.me/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</loc>
     <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
