@@ -167,16 +167,18 @@
       
       <categories>
           
-          <category> java </category>
+          <category> Java </category>
           
       </categories>
       
       
         <tags>
             
+            <tag> Java </tag>
+            
             <tag> 多线程 </tag>
             
-            <tag> java </tag>
+            <tag> Java源码 </tag>
             
         </tags>
       
@@ -332,9 +334,9 @@
       
         <tags>
             
-            <tag> 多线程 </tag>
+            <tag> Java </tag>
             
-            <tag> Java锁机制 </tag>
+            <tag> 多线程 </tag>
             
         </tags>
       
