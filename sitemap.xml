@@ -193,6 +193,13 @@
   </url>
   
   <url>
+    <loc>https://blog.zjee.me/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/</loc>
+    <lastmod>2021-01-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.zjee.me/tags/hive/</loc>
     <lastmod>2021-01-09</lastmod>
     <changefreq>daily</changefreq>
@@ -208,13 +215,6 @@
   
   <url>
     <loc>https://blog.zjee.me/tags/hadoop/</loc>
-    <lastmod>2021-01-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.zjee.me/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/</loc>
     <lastmod>2021-01-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
