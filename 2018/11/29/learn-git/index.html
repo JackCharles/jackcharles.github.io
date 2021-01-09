@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Git是目前世界上最先进的分布式版本控制系统，用于敏捷高效地处理任何大小项目，Git也是开发者入门的必备技能之一，这里整理了git常见的操作命令。"><meta name="keywords" content="git"><meta name="author" content="Jack.Charles"><meta name="copyright" content="Jack.Charles"><title>代码版本控制系统Git | 江影不沉浮</title><link rel="shortcut icon" href="/about/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?3f20839b943a104368c94974ce5350fa";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><link rel="dns-prefetch" href="https://www.google-analytics.com"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'G-18T0HPMMWC', 'auto');
+ga('send', 'pageview');</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.2.0'
+} </script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="江影不沉浮" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E7%9A%84%E4%B8%A4%E7%A7%8D%E9%80%94%E5%BE%84%EF%BC%9A"><span class="toc-text">1、创建本地仓库的两种途径：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81git-config%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE%EF%BC%9A"><span class="toc-text">2、git config文件配置：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E5%B0%86%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%92%8C%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E5%85%B3%E8%81%94%EF%BC%88%E9%80%82%E7%94%A8%E4%BA%8Egit-init%E5%88%9B%E5%BB%BA%E7%9A%84%E4%BB%93%E5%BA%93%EF%BC%89%EF%BC%9A"><span class="toc-text">3、将本地仓库和远程仓库关联（适用于git init创建的仓库）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81%E5%B0%86%E6%9C%AC%E5%9C%B0%E4%BF%A1%E6%81%AF%E6%8E%A8%E9%80%81%E5%88%B0%E8%BF%9C%E7%A8%8B"><span class="toc-text">4、将本地信息推送到远程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5%E3%80%81%E6%B7%BB%E5%8A%A0%E6%96%87%E4%BB%B6%EF%BC%8C%E4%BF%AE%E6%94%B9%EF%BC%8C%E6%8F%90%E4%BA%A4%E4%BF%AE%E6%94%B9"><span class="toc-text">5、添加文件，修改，提交修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6%E3%80%81%E5%88%9B%E5%BB%BA%E3%80%81%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF"><span class="toc-text">6、创建、切换分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7%E3%80%81%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80"><span class="toc-text">7、版本回退</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8%E3%80%81%E4%BF%9D%E5%AD%98%E5%B7%A5%E4%BD%9C%E7%8E%B0%E5%9C%BA"><span class="toc-text">8、保存工作现场</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9%E3%80%81%E6%B8%85%E7%90%86%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4"><span class="toc-text">9、清理工作空间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10%E3%80%81%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86"><span class="toc-text">10、标签管理</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/about/avatar.jpg"></div><div class="author-info__name text-center">Jack.Charles</div><div class="author-info__description text-center">记录职业生涯的点点滴滴...</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/JackCharles">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">18</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">20</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">8</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://blog.mrabit.com/bing/today)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">江影不沉浮</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">代码版本控制系统Git</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-11-29</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/">后端开发基础</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.1k</span><span class="post-meta__separator">|</span><span>阅读时长: 3 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h4 id="1、创建本地仓库的两种途径："><a href="#1、创建本地仓库的两种途径：" class="headerlink" title="1、创建本地仓库的两种途径："></a>1、创建本地仓库的两种途径：</h4><ol>
+<li><p>从远程仓库克隆一份：<code>git clone [remote git url]</code></p>
+</li>
+<li><p>创建一个目录：<code>mkdir git</code>, 然后用 <code>git init</code> 去初始化这个目录，使之成为一个git仓库。</p>
+</li>
+</ol>
+<h4 id="2、git-config文件配置："><a href="#2、git-config文件配置：" class="headerlink" title="2、git config文件配置："></a>2、git config文件配置：</h4><ol>
+<li>配置全局用户名：<code>git config --global user.name &quot;xxxxxx&quot;</code></li>
+<li>配置全局E-mail：<code>git config --global user.email &quot;xxxxxx@xx.com&quot;</code>, 如果需要在项目中配置不同的用户名和邮件，则只需要在项目目录下执行上面的命令，不带 <code>--global</code> 即可。</li>
+<li>查看配置文件: <code>git config --list</code></li>
+</ol>
+<h4 id="3、将本地仓库和远程仓库关联（适用于git-init创建的仓库）："><a href="#3、将本地仓库和远程仓库关联（适用于git-init创建的仓库）：" class="headerlink" title="3、将本地仓库和远程仓库关联（适用于git init创建的仓库）："></a>3、将本地仓库和远程仓库关联（适用于git init创建的仓库）：</h4><ol>
+<li>添加远程仓库：<code>git remote add [host-name] [git-url]</code>, 一般host-name取<code>origin</code>, 这也是git默认主机名。</li>
+<li>拉取本地还没有的远程仓库的信息：<code>git fetch [host-name] [branch-name]</code>,从远程仓库下载制定分支的信息到本地，但不会与本地的仓库合并，需手动合并<code>git merge [host-name] [branch-name]</code>，如：<code>git fetch origin dev; git merge origin dev;</code></li>
+<li>拉取远程信息，并尝试与本地合并(相当于fetch和merge的合体)：<code>git pull [host-name] [branch-name]</code>, 有冲突需手动解决再手动合并。</li>
+<li>查看远程仓库信息：<code>git remote -v</code>。</li>
+</ol>
+<h4 id="4、将本地信息推送到远程"><a href="#4、将本地信息推送到远程" class="headerlink" title="4、将本地信息推送到远程"></a>4、将本地信息推送到远程</h4><ol>
+<li><code>git push [host] [branch]</code>，如果远程没有对应分支，则需要带上 <code>-u</code> 参数创建相应分支。</li>
+<li>如果本地分支没有与远程分支关联，则需要：<code>git branch --set-upstream [remote-branch]</code>建立关联。</li>
+<li>如果远程分支有其他人提交过，则必须先<code>git pull</code>,尝试与本地合并合并（有冲突解决冲突）后才可以push。</li>
+</ol>
+<h4 id="5、添加文件，修改，提交修改"><a href="#5、添加文件，修改，提交修改" class="headerlink" title="5、添加文件，修改，提交修改"></a>5、添加文件，修改，提交修改</h4><ol>
+<li>添加文件到暂存区：<code>git add [file-name or directory-name]</code>,可以使用通配符。</li>
+<li>所有做的修改都需要使用<code>git add</code>后在进行<code>git commit</code>操作。</li>
+<li>提交修改到本地仓库：<code>git commit -m &#39;说明信息&#39;</code>。</li>
+<li>撤销修改/恢复删除文件：<code>git check --[file-name]</code>，注意两个’-‘。</li>
+<li>查看git状态：<code>git status</code>。</li>
+<li>查看commit日志：<code>git log</code>，单行显示：<code>git log --pretty=oneline</code>。</li>
+<li>查看上次的修改：<code>git diff file-name</code>。</li>
+<li>从暂存区删除一个文件：<code>git rm file-name</code>。</li>
+</ol>
+<h4 id="6、创建、切换分支"><a href="#6、创建、切换分支" class="headerlink" title="6、创建、切换分支"></a>6、创建、切换分支</h4><ol>
+<li>创建并切换分支：<code>git checkout -b [branch-name]</code>，他相当于<code>git branch [branch-name]; git checkout [branch-name];</code>。</li>
+<li>切换分支：<code>git checkout [branch-name]</code>。</li>
+<li>删除分支：<code>git branch -d &lt;name&gt;</code>，使用<code>-D</code>强行删除。</li>
+<li>查看分支合并情况：<code>git log --graph --pretty=oneline --abbrev-commit</code></li>
+</ol>
+<h4 id="7、版本回退"><a href="#7、版本回退" class="headerlink" title="7、版本回退"></a>7、版本回退</h4><ol>
+<li>本地仓库回退：<code>git reset --hard HEAD^</code>，一个<code>^</code>表示回退一个版本，两个<code>^^</code>表示回退两个版本，一次类推，回退100个版本可以这样写<code>HEAD~100</code>，也可以指定回退到具体某个版本<code>git reset --hard 1094adb</code>。</li>
+<li>重返未来：使用<code>git reflog</code>查看操作历史，找到要回去的版本号，使用1中命令即可回到未来。</li>
+</ol>
+<h4 id="8、保存工作现场"><a href="#8、保存工作现场" class="headerlink" title="8、保存工作现场"></a>8、保存工作现场</h4><ol>
+<li><code>git stash</code>，保存工作现场后，working dir就是干净的，这时就可以创建别的分支，进行别的工作，比如紧急修复bug场景。PS：如果当前工作区不干净git不允许创建新的分支。</li>
+<li>恢复工作区：<code>git stash pop</code>，它相当于<code>git stash apply; git stash drop;</code>，恢复并删除stash内容。</li>
+</ol>
+<h4 id="9、清理工作空间"><a href="#9、清理工作空间" class="headerlink" title="9、清理工作空间"></a>9、清理工作空间</h4><ol>
+<li><code>git checkout .</code> ，丢弃该目录下所有未提交的修改。</li>
+<li><code>git clean -df [path]</code>，丢弃当前目录/path目录下所有未track的文件或目录，当使用<code>-n</code>时，仅仅提示会删除哪些文件，不会操作.gitignore里指定的文件，<code>-x</code>可以忽略.gitignore定义。</li>
+<li><code>git reset --hard</code>，它一般和<code>git clean -df</code>搭配使用，可以让目录回到最近一次commit的状态，又可以愉快开始新的工作了。</li>
+</ol>
+<h4 id="10、标签管理"><a href="#10、标签管理" class="headerlink" title="10、标签管理"></a>10、标签管理</h4><ol>
+<li>commit打标签：<code>$ git tag v0.9 [-m &#39;说明文字&#39;] f52c633</code>，可以省略commit号，默认打在最新commit上。</li>
+<li>使用<code>git show tag-name</code>查看说明文字。</li>
+<li>使用<code>git tag</code>查看所有标签。</li>
+<li>使用<code>git tag -d v0.1</code>删除标签。</li>
+<li>将标签推送到远程：<code>git push origin &lt;tagname&gt;</code>，使用<code>git push origin --tags</code>推送全部tag。</li>
+<li>使用<code>git push origin :refs/tags/&lt;tagname&gt;</code>可以删除一个远程标签，需要先删除本地对应标签。</li>
+</ol>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jack.Charles</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://blog.zjee.me/2018/11/29/learn-git/">https://blog.zjee.me/2018/11/29/learn-git/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.zjee.me">江影不沉浮</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/git/">git</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2018/11/29/thrift-grama/"><i class="fa fa-chevron-left">  </i><span>RPC框架之Thrift</span></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'hiuyEvHNGJv0HBzIgke1FOa2-MdYXbMMI',
+  appKey:'W2WW9ah2D4zfyhW3aYtKw3xD',
+  placeholder:'say something...',
+  avatar:'monsterid',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(https://blog.mrabit.com/bing/today)"><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2021 By Jack.Charles</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
